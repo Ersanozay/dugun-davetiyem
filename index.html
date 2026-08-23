@@ -1,21 +1,131 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Düğün Davetiyemiz</title>
-
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Davetiye İskeleti</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<noscript><style>.intro{display:none!important}html{overflow:auto!important;height:auto!important}</style></noscript>
+<link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-    <main>
-        <h1>Düğünümüze Davetlisiniz</h1>
-        <p>Web sitemiz hazırlanıyor.</p>
-    </main>
+<!-- ======================================================
+     CONFIG: sadece script.js dosyasının en üstündeki CONFIG
+     nesnesini (script.js) ve videoyu ("intro-video.mp4") değiştirerek
+     tüm davetiyeyi kendine uyarlayabilirsin.
+     ====================================================== -->
 
-    <script src="script.js"></script>
+<!-- INTRO / VİDEO -->
+<div class="intro" id="intro">
+  <video class="intro__video" id="introVideo" src="assets/videos/intro-video.mp4" muted playsinline preload="auto"></video>
+  <div class="intro__scrim"></div>
+
+  <div class="intro__overlay-names" id="introNames">
+    <div class="monogram" id="introMonogram">A&B</div>
+    <p><span data-cfg="partner1"></span><span class="amp">&amp;</span><span data-cfg="partner2"></span></p>
+  </div>
+
+  <div class="intro__controls">
+    <button type="button" class="intro__btn intro__sound" id="soundBtn" aria-pressed="false" aria-label="Sesi aç">🔇</button>
+    <button type="button" class="intro__btn" id="skipBtn">Geç</button>
+  </div>
+
+  <button type="button" class="intro__tap" id="tapBtn" aria-label="Videoyu oynat">
+    <span class="intro__tap-ring">▶</span>
+    <span class="intro__tap-text">Başlatmak için dokunun</span>
+  </button>
+</div>
+
+<!-- HERO — video, buraya kesintisiz geçiş yapar -->
+<section class="hero">
+  <div class="monogram" id="heroMonogram">A&B</div>
+  <p class="eyebrow reveal">Sizi davet ediyoruz</p>
+  <h1 class="hero__names reveal"><span data-cfg="partner1"></span><span class="amp">&amp;</span><span data-cfg="partner2"></span></h1>
+  <p class="hero__dates reveal" data-cfg="dateShort"></p>
+  <div class="hero__scroll"><span></span>Kaydır</div>
+</section>
+
+<div class="scallop" style="--target:var(--sand)"></div>
+
+<!-- COUNTDOWN -->
+<section class="countdown">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">Geri Sayım</p>
+      <h2>Büyük güne</h2>
+    </div>
+    <div class="countdown__grid reveal">
+      <div class="countdown__item arch-tile"><span class="countdown__value" id="cd-d">--</span><span class="countdown__label">Gün</span></div>
+      <div class="countdown__item arch-tile"><span class="countdown__value" id="cd-h">--</span><span class="countdown__label">Saat</span></div>
+      <div class="countdown__item arch-tile"><span class="countdown__value" id="cd-m">--</span><span class="countdown__label">Dakika</span></div>
+      <div class="countdown__item arch-tile"><span class="countdown__value" id="cd-s">--</span><span class="countdown__label">Saniye</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="scallop" style="--target:var(--ivory);transform:rotate(180deg)"></div>
+
+<!-- NOT + FOTOĞRAF -->
+<section class="note">
+  <div class="wrap">
+    <div class="note reveal">
+      <div class="note__frame">
+        <span>[ÇİFT FOTOĞRAFINIZI<br>BURAYA EKLEYİN]</span>
+      </div>
+      <p class="note__text" data-cfg="note"></p>
+    </div>
+  </div>
+</section>
+
+<div class="scallop" style="--target:var(--sand)"></div>
+
+<!-- DETAYLAR -->
+<section class="details" style="background:var(--sand)">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">Detaylar</p>
+      <h2>Bilmeniz gereken her şey</h2>
+    </div>
+    <div class="details__grid reveal">
+      <div class="detail-card">
+        <p class="eyebrow" data-cfg="ceremony.label"></p>
+        <h3 data-cfg="ceremony.venue"></h3>
+        <span class="detail-card__time" data-cfg="ceremony.time"></span>
+        <p class="detail-card__addr" data-cfg="ceremony.address"></p>
+        <a class="detail-card__link" data-cfg-href="ceremony.mapUrl" href="#">Yol Tarifi Al</a>
+      </div>
+      <div class="detail-card">
+        <p class="eyebrow" data-cfg="wedding.label"></p>
+        <h3 data-cfg="wedding.venue"></h3>
+        <span class="detail-card__time" data-cfg="wedding.time"></span>
+        <p class="detail-card__addr" data-cfg="wedding.address"></p>
+        <a class="detail-card__link" data-cfg-href="wedding.mapUrl" href="#">Yol Tarifi Al</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="timeline">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">Akış</p>
+      <h2>Günün planı</h2>
+    </div>
+    <div id="timelineWrap"></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="monogram" id="footMonogram">A&B</div>
+  <p class="foot-names"><span data-cfg="partner1"></span><span class="amp">&amp;</span><span data-cfg="partner2"></span></p>
+  <p class="foot-line" data-cfg="dateShort"></p>
+</footer>
+
+<script src="script.js"></script>
 </body>
 </html>
