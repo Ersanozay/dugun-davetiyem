@@ -11,31 +11,28 @@ const CONFIG = {
   // Kayan fotoğraf şeridi için buraya dosya yollarını sırayla ekle,
   // örn: "assets/images/foto1.jpg". Boş bırakırsan yer tutucu kutular görünür.
   photos: [],
-  countdownTarget: "2026-07-05T20:00:00", // ISO tarih — hem geri sayım hem de hero'daki büyük tarih bloğu bunu kullanır
+  countdownTarget: "2026-10-10T19:30:00+03:00", // Türkiye saati — geri sayım ve hero tarih bloğu
   note: "Bugüne kadar bize eşlik ettiğiniz için teşekkür ederiz. En mutlu günümüzü sizlerle paylaşmak istiyoruz.",
   ceremony: {
     label: "Kına Gecesi",
-    venue: "[Mekan Adı]",
-    time: "14:00",
-    address: "[Açık adres buraya]",
-    mapUrl: "#"
+    venue: "Kına Salonu",
+    time: "2 Ekim 2026 • 19:30",
+    address: "Konumu haritada görüntüleyebilirsiniz.",
+    mapUrl: "https://maps.app.goo.gl/uiNuarfZ31q84wLa8"
   },
   wedding: {
     label: "Düğün Daveti",
-    venue: "[Mekan Adı]",
-    time: "20:00",
-    address: "[Açık adres buraya]",
-    mapUrl: "#"
+    venue: "Düğün Salonu",
+    time: "10 Ekim 2026 • 19:30",
+    address: "Konumu haritada görüntüleyebilirsiniz.",
+    mapUrl: "https://maps.app.goo.gl/6FZuy3j3o39NYSi79"
   },
   timeline: [
-    { day: "Nikah Günü", items: [
-      { time:"13:00", title:"Gelin Alma", desc:"[Adres]" },
-      { time:"14:00", title:"Nikah Töreni", desc:"[Mekan adı]" }
+    { day: "2 Ekim 2026", items: [
+      { time:"19:30", title:"Kına Gecesi", desc:"Kına Salonu" }
     ]},
-    { day: "Düğün Günü", items: [
-      { time:"19:30", title:"Gelin Alma", desc:"[Adres]" },
-      { time:"20:00", title:"Düğün Daveti", desc:"[Mekan adı]" },
-      { time:"22:00", title:"Parti", desc:"Dans pistine!" }
+    { day: "10 Ekim 2026", items: [
+      { time:"19:30", title:"Düğün Daveti", desc:"Düğün Salonu" }
     ]}
   ]
 };
@@ -51,24 +48,19 @@ document.querySelectorAll('[data-cfg-href]').forEach(el=>{
   if(val) el.setAttribute('href', val);
 });
 
-/* ---- monogram baş harfleri (kapı ekranı + footer) ---- */
-const initials = (CONFIG.partner1?.trim()[0]||'A') + '&' + (CONFIG.partner2?.trim()[0]||'B');
-document.querySelectorAll('#gateMonogram,#footMonogram').forEach(el=>{
-  el.textContent = initials.toUpperCase();
-});
-
-/* ---- hero: el yazısı isim satırı ("Ad Soyad ve Ad Soyad") ---- */
-document.getElementById('heroScript').textContent = `${CONFIG.partner1} ve ${CONFIG.partner2}`;
+/* ---- hero: isim satırı ---- */
+document.getElementById('heroScript').textContent = `${CONFIG.partner1} & ${CONFIG.partner2}`;
 
 /* ---- hero: büyük tarih bloğu (ay/gün/yıl/gün adı), countdownTarget'tan hesaplanır ---- */
 (function fillHeroDate(){
   const d = new Date(CONFIG.countdownTarget);
   if(isNaN(d)) return;
-  const month = d.toLocaleDateString('tr-TR', { month:'long' }).toUpperCase();
-  const weekday = d.toLocaleDateString('tr-TR', { weekday:'long' }).toUpperCase();
+  const dateOptions = { timeZone:'Europe/Istanbul' };
+  const month = d.toLocaleDateString('tr-TR', { ...dateOptions, month:'long' }).toUpperCase();
+  const weekday = d.toLocaleDateString('tr-TR', { ...dateOptions, weekday:'long' }).toUpperCase();
   document.getElementById('heroMonth').textContent = month;
-  document.getElementById('heroDay').textContent = d.getDate();
-  document.getElementById('heroYear').textContent = d.getFullYear();
+  document.getElementById('heroDay').textContent = d.toLocaleDateString('tr-TR', { ...dateOptions, day:'numeric' });
+  document.getElementById('heroYear').textContent = d.toLocaleDateString('tr-TR', { ...dateOptions, year:'numeric' });
   document.getElementById('heroWeekday').textContent = weekday;
 })();
 

@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Davetiye İskeleti</title>
+<title>Sabriye &amp; Ersan | Düğün Davetiyesi</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Jost:wght@300;400;500;600&family=Noto+Serif+Display:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&amp;display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -55,7 +55,6 @@
   </div>
 
   <button type="button" class="hero__gate" id="gateBtn" aria-label="Davetiyeyi aç">
-    <div class="monogram" id="gateMonogram">A&B</div>
     <span class="hero__gate-ring">▶</span>
     <span class="hero__gate-text">Açmak için dokunun</span>
   </button>
@@ -72,7 +71,7 @@
       <p class="eyebrow">Geri Sayım</p>
       <h2>En Özel Günümüze Doğru</h2>
     </div>
-    <div class="countdown__grid reveal">
+    <div class="countdown__grid reveal" aria-live="polite">
       <div class="countdown__item arch-tile"><span class="countdown__value" id="cd-d">--</span><span class="countdown__label">Gün</span></div>
       <div class="countdown__item arch-tile"><span class="countdown__value" id="cd-h">--</span><span class="countdown__label">Saat</span></div>
       <div class="countdown__item arch-tile"><span class="countdown__value" id="cd-m">--</span><span class="countdown__label">Dakika</span></div>
@@ -109,14 +108,14 @@
         <h3 data-cfg="ceremony.venue"></h3>
         <span class="detail-card__time" data-cfg="ceremony.time"></span>
         <p class="detail-card__addr" data-cfg="ceremony.address"></p>
-        <a class="detail-card__link" data-cfg-href="ceremony.mapUrl" href="#">Yol Tarifi Al</a>
+        <a class="detail-card__link" data-cfg-href="ceremony.mapUrl" href="#" target="_blank" rel="noopener noreferrer">Yol Tarifi Al</a>
       </div>
       <div class="detail-card">
         <p class="eyebrow" data-cfg="wedding.label"></p>
         <h3 data-cfg="wedding.venue"></h3>
         <span class="detail-card__time" data-cfg="wedding.time"></span>
         <p class="detail-card__addr" data-cfg="wedding.address"></p>
-        <a class="detail-card__link" data-cfg-href="wedding.mapUrl" href="#">Yol Tarifi Al</a>
+        <a class="detail-card__link" data-cfg-href="wedding.mapUrl" href="#" target="_blank" rel="noopener noreferrer">Yol Tarifi Al</a>
       </div>
     </div>
   </div>
@@ -135,7 +134,6 @@
 
 <!-- FOOTER -->
 <footer>
-  <div class="monogram" id="footMonogram">A&B</div>
   <p class="foot-names"><span data-cfg="partner1"></span><span class="amp">&amp;</span><span data-cfg="partner2"></span></p>
   <p class="foot-line" data-cfg="dateShort"></p>
 </footer>
