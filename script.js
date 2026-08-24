@@ -12,7 +12,7 @@ const CONFIG = {
   // örn: "assets/images/foto1.jpg". Boş bırakırsan yer tutucu kutular görünür.
   photos: [],
   countdownTarget: "2026-10-10T19:30:00+03:00", // Türkiye saati — geri sayım ve hero tarih bloğu
-  note: "Bugüne kadar bize eşlik ettiğiniz için teşekkür ederiz. En mutlu günümüzü sizlerle paylaşmak istiyoruz.",
+  note: "Bugüne kadar bize eşlik ettiğiniz için teşekkür ederiz.\nEn mutlu günümüzü sizlerle paylaşmak istiyoruz.",
   ceremony: {
     label: "Kına Gecesi",
     venue: "Kına Salonu",
@@ -26,6 +26,11 @@ const CONFIG = {
     time: "10 Ekim 2026 • 19:30",
     address: "Konumu haritada görüntüleyebilirsiniz.",
     mapUrl: "https://maps.app.goo.gl/6FZuy3j3o39NYSi79"
+  },
+  rsvp: {
+    // Ülke koduyla, başında + olmadan yaz: örn. 905xxxxxxxxx.
+    // Boş bırakılırsa WhatsApp kişi seçme ekranı açılır.
+    whatsappNumber: "905349266972"
   },
   timeline: [
     { day: "2 Ekim 2026", items: [
@@ -98,6 +103,73 @@ CONFIG.timeline.forEach(day=>{
   dayEl.appendChild(list);
   timelineWrap.appendChild(dayEl);
 });
+
+/* ---- katılım formu: yanıtı WhatsApp mesajına dönüştür ---- */
+(function setupRsvp(){
+  const form = document.getElementById('rsvpForm');
+  if(!form) return;
+
+  const attendingFields = document.getElementById('rsvpAttendingFields');
+  const guestCount = document.getElementById('guestCount');
+  const status = document.getElementById('rsvpStatus');
+
+  function syncAttendanceFields(){
+    const attendance = form.elements.attendance.value;
+    const isAttending = attendance === 'Katılacağım';
+    attendingFields.hidden = !isAttending;
+    attendingFields.querySelectorAll('input').forEach(input=>{
+      input.disabled = !isAttending;
+    });
+  }
+
+  form.querySelectorAll('input[name="attendance"]').forEach(input=>{
+    input.addEventListener('change', syncAttendanceFields);
+  });
+
+  form.querySelectorAll('[data-step]').forEach(button=>{
+    button.addEventListener('click', ()=>{
+      const next = Number(guestCount.value) + Number(button.dataset.step);
+      guestCount.value = String(Math.min(10, Math.max(1, next)));
+    });
+  });
+
+  form.addEventListener('submit', event=>{
+    event.preventDefault();
+    if(!form.reportValidity()) return;
+
+    const data = new FormData(form);
+    const attendance = data.get('attendance');
+    const isAttending = attendance === 'Katılacağım';
+    const lines = [
+      `Merhaba ${CONFIG.partner1} & ${CONFIG.partner2},`,
+      '',
+      'Katılım durumumu bildirmek istiyorum.',
+      `Ad Soyad: ${String(data.get('fullName')).trim()}`,
+      `Durum: ${attendance}`
+    ];
+
+    if(isAttending){
+      lines.push(`Etkinlik: ${data.get('event')}`);
+      lines.push(`Kişi Sayısı: ${data.get('guestCount')}`);
+    }
+
+    const note = String(data.get('note') || '').trim();
+    if(note) lines.push(`Not: ${note}`);
+
+    const message = lines.join('\n');
+    const number = String(CONFIG.rsvp?.whatsappNumber || '').replace(/\D/g,'');
+    const whatsappUrl = number
+      ? `https://wa.me/${number}?text=${encodeURIComponent(message)}`
+      : `https://wa.me/?text=${encodeURIComponent(message)}`;
+
+    status.textContent = number
+      ? 'WhatsApp açılıyor…'
+      : 'WhatsApp açıldığında mesajı göndereceğiniz kişiyi seçiniz.';
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+  });
+
+  syncAttendanceFields();
+})();
 
 /* ---- geri sayım ---- */
 const target = new Date(CONFIG.countdownTarget).getTime();
