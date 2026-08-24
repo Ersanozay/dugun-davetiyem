@@ -3,13 +3,18 @@
    Yer tutucuları ([Mekan Adı] gibi) kendi bilgilerinle değiştir.
    ====================================================== */
 const CONFIG = {
-  partner1: "AD SOYAD",
-  partner2: "AD SOYAD",
-  dateShort: "28 Haziran & 5 Temmuz 2026",
-  countdownTarget: "2026-07-05T20:00:00", // ISO tarih — düğün saatine göre ayarla
+  partner1: "Sabriye",
+  partner2: "Ersan",
+  dateShort: "2 Ekim - 10 Ekim 2026",
+  heroLabel: "BU MUTLU GÜNÜMÜZDE SİZLERİ DE ARAMIZDA GÖRMEKTEN MUTLULUK DUYARIZ",
+  countdownNote: "Bugünü en sevgili ailemiz ve arkadaşlarımızla paylaşmaktan dolayı son derece heyecanlıyız.",
+  // Kayan fotoğraf şeridi için buraya dosya yollarını sırayla ekle,
+  // örn: "assets/images/foto1.jpg". Boş bırakırsan yer tutucu kutular görünür.
+  photos: [],
+  countdownTarget: "2026-07-05T20:00:00", // ISO tarih — hem geri sayım hem de hero'daki büyük tarih bloğu bunu kullanır
   note: "Bugüne kadar bize eşlik ettiğiniz için teşekkür ederiz. En mutlu günümüzü sizlerle paylaşmak istiyoruz.",
   ceremony: {
-    label: "Nikah Töreni",
+    label: "Kına Gecesi",
     venue: "[Mekan Adı]",
     time: "14:00",
     address: "[Açık adres buraya]",
@@ -46,11 +51,41 @@ document.querySelectorAll('[data-cfg-href]').forEach(el=>{
   if(val) el.setAttribute('href', val);
 });
 
-/* ---- monogram baş harfleri ---- */
+/* ---- monogram baş harfleri (kapı ekranı + footer) ---- */
 const initials = (CONFIG.partner1?.trim()[0]||'A') + '&' + (CONFIG.partner2?.trim()[0]||'B');
-document.querySelectorAll('#introMonogram,#heroMonogram,#footMonogram').forEach(el=>{
+document.querySelectorAll('#gateMonogram,#footMonogram').forEach(el=>{
   el.textContent = initials.toUpperCase();
 });
+
+/* ---- hero: el yazısı isim satırı ("Ad Soyad ve Ad Soyad") ---- */
+document.getElementById('heroScript').textContent = `${CONFIG.partner1} ve ${CONFIG.partner2}`;
+
+/* ---- hero: büyük tarih bloğu (ay/gün/yıl/gün adı), countdownTarget'tan hesaplanır ---- */
+(function fillHeroDate(){
+  const d = new Date(CONFIG.countdownTarget);
+  if(isNaN(d)) return;
+  const month = d.toLocaleDateString('tr-TR', { month:'long' }).toUpperCase();
+  const weekday = d.toLocaleDateString('tr-TR', { weekday:'long' }).toUpperCase();
+  document.getElementById('heroMonth').textContent = month;
+  document.getElementById('heroDay').textContent = d.getDate();
+  document.getElementById('heroYear').textContent = d.getFullYear();
+  document.getElementById('heroWeekday').textContent = weekday;
+})();
+
+/* ---- kayan fotoğraf şeridi ---- */
+(function buildMarquee(){
+  const track = document.getElementById('marqueeTrack');
+  const PLACEHOLDER_COUNT = 6;
+  const list = CONFIG.photos.length ? CONFIG.photos : Array(PLACEHOLDER_COUNT).fill(null);
+
+  const itemsHTML = list.map((src, i) => {
+    if (src) return `<div class="marquee__item"><img src="${src}" alt="" loading="lazy"></div>`;
+    return `<div class="marquee__item marquee__item--placeholder"><span>Fotoğraf ${i + 1}</span></div>`;
+  }).join('');
+
+  // Kesintisiz döngü için içerik iki kez tekrarlanır (%50 kayınca baştan başlar)
+  track.innerHTML = itemsHTML + itemsHTML;
+})();
 
 /* ---- timeline oluştur ---- */
 const timelineWrap = document.getElementById('timelineWrap');
@@ -99,57 +134,51 @@ if('IntersectionObserver' in window){
 }
 
 /* ======================================================
-   INTRO — video ana sayfanın kendisine "eriyerek" geçer:
-   video biterken (son ~0.8sn) çapraz geçiş (crossfade)
-   başlar, video görünmez olunca da doğrudan hero (ana
-   sayfa) görünür durumda kalır. Ayrı bir sayfaya geçiş
-   veya sert kesme yoktur.
+   HERO — "Açmak için dokunun" kapısı:
+   1) Sayfa açıldığında hiçbir video oynamaz, sadece kapak
+      görseli (zarf karesi) ve dokunma isteği görünür.
+   2) Dokununca introClip (0-6sn, zarf + geçiş) bir kez oynar
+      ve şarkı (bgMusic) başlar. Videolar hep sessizdir,
+      sitedeki tüm ses bu şarkıdan gelir.
+   3) introClip bitince loopClip (yürüyüş sahnesi) devreye
+      girer ve sonsuz döngüde kalır; tam bu anda hero
+      metinleri de belirir.
    ====================================================== */
-const root = document.documentElement;
-const introEl = document.getElementById('intro');
-const introVideo = document.getElementById('introVideo');
-const introNames = document.getElementById('introNames');
+const gateBtn = document.getElementById('gateBtn');
+const introClip = document.getElementById('introClip');
+const loopClip = document.getElementById('loopClip');
+const bgMusic = document.getElementById('bgMusic');
 const soundBtn = document.getElementById('soundBtn');
-const skipBtn = document.getElementById('skipBtn');
-const tapBtn = document.getElementById('tapBtn');
+const heroContent = document.getElementById('heroContent');
 
-root.classList.add('lock');
+gateBtn.addEventListener('click', ()=>{
+  gateBtn.classList.add('is-hidden');
 
-let finished = false;
-function finishIntro(){
-  if(finished) return;
-  finished = true;
-  introEl.classList.add('is-fading');
-  root.classList.remove('lock');
-}
+  introClip.play(); // video her zaman sessiz, sadece görsel
 
-introVideo.addEventListener('timeupdate', ()=>{
-  if(!introVideo.duration) return;
-  if(introVideo.duration - introVideo.currentTime <= 3){
-    introNames.classList.add('show');
+  bgMusic.currentTime = 0;
+  bgMusic.muted = false;
+  const playPromise = bgMusic.play();
+  if(playPromise !== undefined){
+    playPromise.catch(()=>{}); // tarayıcı engellerse buton ile elle açılabilir
   }
-  if(introVideo.duration - introVideo.currentTime <= 0.8){
-    finishIntro();
-  }
+
+  soundBtn.hidden = false;
+  soundBtn.textContent = bgMusic.muted ? '🔇' : '🔊';
+  soundBtn.setAttribute('aria-pressed', String(!bgMusic.muted));
 });
-introVideo.addEventListener('ended', finishIntro);
-skipBtn.addEventListener('click', finishIntro);
+
+introClip.addEventListener('ended', ()=>{
+  loopClip.currentTime = 0;
+  loopClip.play();
+
+  introClip.classList.add('is-hidden');
+  loopClip.classList.add('is-visible');
+  heroContent.classList.add('is-in'); // metinler yürüyüşle birlikte belirir
+});
 
 soundBtn.addEventListener('click', ()=>{
-  introVideo.muted = !introVideo.muted;
-  soundBtn.setAttribute('aria-pressed', String(!introVideo.muted));
-  soundBtn.textContent = introVideo.muted ? '🔇' : '🔊';
+  bgMusic.muted = !bgMusic.muted;
+  soundBtn.textContent = bgMusic.muted ? '🔇' : '🔊';
+  soundBtn.setAttribute('aria-pressed', String(!bgMusic.muted));
 });
-
-tapBtn.addEventListener('click', ()=>{
-  introVideo.play();
-  introEl.classList.remove('needs-tap');
-});
-
-const playPromise = introVideo.play();
-if(playPromise !== undefined){
-  playPromise.catch(()=>{ introEl.classList.add('needs-tap'); });
-}
-
-/* video hiç yüklenemezse akışı kilitlemesin */
-introVideo.addEventListener('error', finishIntro);

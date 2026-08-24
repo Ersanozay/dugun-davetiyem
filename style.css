@@ -20,7 +20,6 @@
   *{box-sizing:border-box}
   html,body{margin:0;padding:0}
   html{scroll-behavior:smooth}
-  html.lock{overflow:hidden;height:100%}
 
   body{
     background:var(--ivory);
@@ -83,124 +82,139 @@
 
   .arch-tile{border-radius:999px 999px 6px 6px}
 
-  /* ============ INTRO (video) ============ */
-  .intro{
-    position:fixed;
-    inset:0;
-    z-index:100;
-    background:var(--ink);
-    overflow:hidden;
-    transition:opacity 1.1s ease, visibility 1.1s ease;
-  }
-  .intro.is-fading{opacity:0;visibility:hidden;pointer-events:none}
-
-  .intro__video{
-    position:absolute;inset:0;
-    width:100%;height:100%;
-    object-fit:cover;
-  }
-
-  .intro__scrim{
-    position:absolute;left:0;right:0;bottom:0;height:46%;
-    background:linear-gradient(to top, rgba(20,15,10,.65), transparent);
-    pointer-events:none;
-  }
-
-  .intro__overlay-names{
-    position:absolute;
-    left:50%;bottom:9%;
-    transform:translateX(-50%);
-    text-align:center;
-    color:#fff;
-    opacity:0;
-    transition:opacity 1.1s ease, transform 1.1s ease;
-  }
-  .intro__overlay-names.show{opacity:1}
-  .intro__overlay-names .monogram{
-    transform:scale(.9);
-    box-shadow:0 6px 20px -4px rgba(0,0,0,.5), inset 0 1px 1px rgba(255,255,255,.6);
-  }
-  .intro__overlay-names p{
-    font-size:clamp(1.5rem,6vw,2.1rem);
-    font-family:'Fraunces',serif;
-    font-weight:600;
-    text-shadow:0 4px 20px rgba(0,0,0,.4);
-  }
-
-  .intro__controls{
-    position:absolute;
-    top:1.1rem;right:1.1rem;left:1.1rem;
-    display:flex;justify-content:space-between;align-items:flex-start;
-    z-index:2;
-  }
-  .intro__btn{
-    background:rgba(20,16,12,.4);
-    border:1px solid rgba(255,255,255,.35);
-    color:#fff;
-    border-radius:999px;
-    padding:.5rem .9rem;
-    font-size:.68rem;
-    letter-spacing:.14em;
-    text-transform:uppercase;
-    cursor:pointer;
-    backdrop-filter:blur(4px);
-  }
-  .intro__sound{
-    width:38px;height:38px;padding:0;
-    display:flex;align-items:center;justify-content:center;
-    font-size:1rem;
-  }
-
-  .intro__tap{
-    position:absolute;inset:0;
-    display:none;
-    align-items:center;justify-content:center;
-    flex-direction:column;gap:.8rem;
-    background:rgba(20,16,12,.35);
-    color:#fff;
-    cursor:pointer;
-    border:none;
-  }
-  .intro.needs-tap .intro__tap{display:flex}
-  .intro__tap-ring{
-    width:58px;height:58px;border:1px solid rgba(255,255,255,.7);
-    border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;
-  }
-  .intro__tap-text{font-size:.68rem;letter-spacing:.22em;text-transform:uppercase}
-
-  /* ============ HERO ============ */
+  /* ============ HERO — kalıcı döngülü (loop) video arka plan ============
+     --hero-ink: kopyaladığın tasarımdaki rgb(139,136,137) yerine, videonun
+     karanlık/aydınlık değişen alanlarında da okunaklı kalsın diye kırık-beyaz
+     kullandım. Orijinal griyi istersen tek satırdan değiştirebilirsin. */
   .hero{
+    --hero-ink:var(--card);
+    position:relative;
     min-height:100svh;
+    overflow:hidden;
     display:flex;
-    flex-direction:column;
     align-items:center;
     justify-content:center;
     text-align:center;
-    padding:6rem 1.5rem 4rem;
-    position:relative;
+    padding:0;
   }
-  .hero__names{
-    font-size:clamp(2.6rem,9vw,4.6rem);
-    line-height:1.05;
+  .hero__video{
+    position:absolute;inset:0;
+    width:100%;height:100%;
+    object-fit:cover;
+    opacity:1;
+    transition:opacity .7s ease;
   }
-  .hero__dates{
-    margin-top:1.4rem;
-    font-size:.95rem;
-    letter-spacing:.12em;
-    color:var(--ink-soft);
+  .hero__video.is-hidden{opacity:0}
+  .hero__video--loop{opacity:0}
+  .hero__video--loop.is-visible{opacity:1}
+
+  .hero__scrim{
+    position:absolute;inset:0;
+    background:
+      linear-gradient(to top, rgba(15,12,9,.62) 0%, rgba(15,12,9,.22) 45%, rgba(15,12,9,.35) 100%);
+    pointer-events:none;
   }
-  .hero__scroll{
+
+  .hero__sound{
     position:absolute;
-    bottom:2.2rem;
+    top:1.1rem;left:1.1rem;
+    z-index:3;
+    width:38px;height:38px;padding:0;
+    display:flex;align-items:center;justify-content:center;
+    background:rgba(20,16,12,.4);
+    border:1px solid rgba(255,255,255,.35);
+    color:#fff;
+    border-radius:50%;
+    font-size:1rem;
+    cursor:pointer;
+    backdrop-filter:blur(4px);
+  }
+
+  .hero__content{
+    position:relative;z-index:2;
+    display:flex;flex-direction:column;align-items:center;
+    color:var(--hero-ink);
+    padding:2rem 1.5rem;
+    width:100%;
+  }
+
+  /* metinler yürüyüş döngüsü başlarken hepsi birlikte belirir (bkz. script.js) */
+  .hero-fade{
+    opacity:0;
+    transform:translateY(16px);
+    transition:opacity .9s ease .1s, transform .9s ease .1s;
+  }
+  .hero__content.is-in .hero-fade{opacity:1;transform:translateY(0)}
+
+  .hero__label{
+    font-family:'Noto Serif Display',serif;
+    font-weight:400;
+    font-size:clamp(.66rem,2.8vw,1rem);
+    letter-spacing:.04em;
+    line-height:1.5;
+    white-space:nowrap;
+    margin:0 auto 1.1rem;
+  }
+  .hero__script{
+    font-family:'Noto Serif Display',serif;
+    font-weight:500;
+    font-size:clamp(2.9rem,11vw,5.2rem);
+    line-height:1.1;
+    margin:0;
+    text-shadow:0 4px 18px rgba(0,0,0,.35);
+  }
+
+  .hero__date{
+    font-family:'Noto Serif Display',serif;
+    margin-top:2.2rem;
+  }
+  .hero__date-grid{
+    display:grid;
+    grid-template-columns:88px auto 88px;
+    align-items:center;
+    justify-content:center;
+    gap:1.1rem;
+  }
+  .hero__date-side{display:flex;flex-direction:column;align-items:center;gap:.5rem}
+  .hero__date-line{display:block;height:1px;width:100%;background:currentColor;opacity:.75}
+  .hero__date-month,.hero__date-year{
+    font-size:.92rem;letter-spacing:.16em;text-transform:uppercase;line-height:1;
+  }
+  .hero__date-day{font-size:clamp(2.8rem,10vw,4.2rem);line-height:.85;font-weight:400}
+  .hero__date-weekday{margin-top:.9rem;text-transform:uppercase;letter-spacing:.24em;font-size:1.05rem}
+
+  .hero__scrolldown{
+    margin-top:2.2rem;
     display:flex;flex-direction:column;align-items:center;gap:.5rem;
-    color:var(--ink-soft);
-    font-size:.64rem;letter-spacing:.24em;text-transform:uppercase;
   }
-  .hero__scroll span{
-    width:1px;height:34px;background:var(--gold);
-    animation:scrolldown 1.8s ease-in-out infinite;
+  .hero__scrolldown svg{width:20px;height:20px;animation:herobounce 2s ease-in-out infinite}
+  .hero__scrolldown p{font-size:.8rem;margin:0}
+  @keyframes herobounce{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+  /* ============ HERO GATE — "Açmak için dokunun" ============ */
+  .hero__gate{
+    position:absolute;inset:0;z-index:5;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:1rem;
+    background:rgba(20,16,12,.3);
+    color:#fff;
+    border:none;
+    cursor:pointer;
+    transition:opacity .7s ease, visibility .7s ease;
   }
-  @keyframes scrolldown{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}50.01%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+  .hero__gate.is-hidden{opacity:0;visibility:hidden;pointer-events:none}
+  .hero__gate .monogram{
+    transform:scale(1.05);
+    box-shadow:0 8px 22px -6px rgba(0,0,0,.55), inset 0 1px 1px rgba(255,255,255,.6);
+  }
+  .hero__gate-ring{
+    width:56px;height:56px;border:1px solid rgba(255,255,255,.75);
+    border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-size:1.05rem;
+    animation:gatepulse 2.4s ease-in-out infinite;
+  }
+  @keyframes gatepulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.08);opacity:.7}}
+  .hero__gate-text{font-size:.7rem;letter-spacing:.24em;text-transform:uppercase}
 
   /* ============ SECTION SHELLS ============ */
   section{position:relative;padding:5rem 0}
@@ -209,7 +223,33 @@
   .section-head p{color:var(--ink-soft);margin-top:.5rem;font-size:.92rem}
 
   /* ============ COUNTDOWN ============ */
-  .countdown{background:var(--sand)}
+  .countdown{background:var(--sand);overflow:hidden}
+  .countdown .wrap{position:relative;z-index:2}
+  .countdown__deco{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    height:clamp(190px,44vh,360px);
+    width:auto;
+    max-width:24vw;
+    object-fit:contain;
+    pointer-events:none;
+    z-index:1;
+    filter:drop-shadow(0 12px 20px rgba(30,24,16,.2));
+  }
+  .countdown__deco--left{left:clamp(2px,3vw,26px)}
+  .countdown__deco--right{right:clamp(2px,3vw,26px)}
+  .countdown__note{
+    max-width:32ch;
+    margin:1.8rem auto 0;
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    font-weight:400;
+    font-size:.82rem;
+    line-height:1.7;
+    color:var(--ink-soft);
+    opacity:.85;
+  }
   .countdown__grid{
     display:grid;
     grid-template-columns:repeat(4,1fr);
@@ -239,29 +279,64 @@
     margin-top:.3rem;
   }
 
-  /* ============ NOTE / PHOTO ============ */
-  .note{display:flex;flex-direction:column;align-items:center;gap:2.5rem;text-align:center}
-  .note__frame{
-    width:min(78vw,300px);
-    aspect-ratio:4/5;
-    border-radius:150px 150px 8px 8px;
-    border:1px solid var(--gold);
-    background:
-      radial-gradient(circle at 50% 38%, color-mix(in srgb, var(--sea) 20%, transparent), transparent 60%),
-      var(--sand);
+  /* ============ NOTE / PHOTO MARQUEE ============
+     Fotoğraflar sürekli sağdan sola kayar, sonsuz döngü. CONFIG.photos
+     dizisine yol eklediğinde gerçek fotoğraflar, boşken yer tutucu
+     kutular görünür (bkz. script.js). */
+  .note{display:flex;flex-direction:column;gap:2.2rem;text-align:center}
+
+  .marquee{
+    width:100vw;
+    position:relative;
+    left:50%;
+    right:50%;
+    margin-left:-50vw;
+    margin-right:-50vw;
+    overflow:hidden;
+    -webkit-mask-image:linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+    mask-image:linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+  }
+  .marquee__track{
     display:flex;
     align-items:center;
-    justify-content:center;
-    padding:1.5rem;
+    gap:14px;
+    width:max-content;
+    padding:0 14px;
+    animation:marquee-scroll 32s linear infinite;
   }
-  .note__frame span{
-    font-size:.72rem;
-    letter-spacing:.08em;
+  .marquee:hover .marquee__track{animation-play-state:paused}
+  @keyframes marquee-scroll{
+    from{transform:translateX(0)}
+    to{transform:translateX(-50%)}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .marquee__track{animation:none}
+  }
+
+  .marquee__item{
+    flex:0 0 auto;
+    width:min(46vw,210px);
+    aspect-ratio:3/4;
+    border-radius:14px 14px 4px 4px;
+    overflow:hidden;
+    box-shadow:var(--shadow);
+  }
+  .marquee__item img{width:100%;height:100%;object-fit:cover;display:block}
+  .marquee__item--placeholder{
+    display:flex;align-items:center;justify-content:center;
+    background:var(--card);
+    border:1px dashed var(--gold);
     color:var(--ink-soft);
-    line-height:1.6;
+    font-family:'Jost',sans-serif;
+    font-size:.72rem;
+    letter-spacing:.06em;
+    text-align:center;
+    padding:1rem;
   }
+
   .note__text{
     max-width:34ch;
+    margin:0 auto;
     font-size:1.05rem;
     line-height:1.75;
     color:var(--ink-soft);

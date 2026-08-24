@@ -6,8 +6,7 @@
 <title>Davetiye İskeleti</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
-<noscript><style>.intro{display:none!important}html{overflow:auto!important;height:auto!important}</style></noscript>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Jost:wght@300;400;500;600&family=Noto+Serif+Display:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -18,44 +17,60 @@
      tüm davetiyeyi kendine uyarlayabilirsin.
      ====================================================== -->
 
-<!-- INTRO / VİDEO -->
-<div class="intro" id="intro">
-  <video class="intro__video" id="introVideo" src="assets/videos/intro-video.mp4" muted playsinline preload="auto"></video>
-  <div class="intro__scrim"></div>
-
-  <div class="intro__overlay-names" id="introNames">
-    <div class="monogram" id="introMonogram">A&B</div>
-    <p><span data-cfg="partner1"></span><span class="amp">&amp;</span><span data-cfg="partner2"></span></p>
-  </div>
-
-  <div class="intro__controls">
-    <button type="button" class="intro__btn intro__sound" id="soundBtn" aria-pressed="false" aria-label="Sesi aç">🔇</button>
-    <button type="button" class="intro__btn" id="skipBtn">Geç</button>
-  </div>
-
-  <button type="button" class="intro__tap" id="tapBtn" aria-label="Videoyu oynat">
-    <span class="intro__tap-ring">▶</span>
-    <span class="intro__tap-text">Başlatmak için dokunun</span>
-  </button>
-</div>
-
-<!-- HERO — video, buraya kesintisiz geçiş yapar -->
+<!-- HERO — dokunarak aç: geçiş bir kez oynar, sonra yürüyüş sahnesi
+     sonsuz döngüde kalır. Metinler tam yürüyüş başlarken belirir. -->
 <section class="hero">
-  <div class="monogram" id="heroMonogram">A&B</div>
-  <p class="eyebrow reveal">Sizi davet ediyoruz</p>
-  <h1 class="hero__names reveal"><span data-cfg="partner1"></span><span class="amp">&amp;</span><span data-cfg="partner2"></span></h1>
-  <p class="hero__dates reveal" data-cfg="dateShort"></p>
-  <div class="hero__scroll"><span></span>Kaydır</div>
+  <video class="hero__video" id="introClip" src="assets/videos/intro-clip.mp4" poster="assets/images/hero-poster.jpg" muted playsinline preload="auto"></video>
+  <video class="hero__video hero__video--loop" id="loopClip" src="assets/videos/loop-clip.mp4" muted loop playsinline preload="auto"></video>
+  <audio id="bgMusic" src="assets/audio/song.mp3" loop preload="auto"></audio>
+  <div class="hero__scrim"></div>
+
+  <button type="button" class="hero__sound" id="soundBtn" aria-pressed="true" aria-label="Sesi kapat" hidden>🔊</button>
+
+  <div class="hero__content" id="heroContent">
+    <p class="hero__label hero-fade" data-cfg="heroLabel"></p>
+    <h1 class="hero__script hero-fade" id="heroScript"></h1>
+
+    <div class="hero__date hero-fade">
+      <div class="hero__date-grid">
+        <div class="hero__date-side">
+          <span class="hero__date-line"></span>
+          <span class="hero__date-month" id="heroMonth">—</span>
+          <span class="hero__date-line"></span>
+        </div>
+        <span class="hero__date-day" id="heroDay">--</span>
+        <div class="hero__date-side">
+          <span class="hero__date-line"></span>
+          <span class="hero__date-year" id="heroYear">----</span>
+          <span class="hero__date-line"></span>
+        </div>
+      </div>
+      <div class="hero__date-weekday" id="heroWeekday">—</div>
+    </div>
+
+    <div class="hero__scrolldown hero-fade">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <p>Aşağı kaydırınız.</p>
+    </div>
+  </div>
+
+  <button type="button" class="hero__gate" id="gateBtn" aria-label="Davetiyeyi aç">
+    <div class="monogram" id="gateMonogram">A&B</div>
+    <span class="hero__gate-ring">▶</span>
+    <span class="hero__gate-text">Açmak için dokunun</span>
+  </button>
 </section>
 
 <div class="scallop" style="--target:var(--sand)"></div>
 
 <!-- COUNTDOWN -->
 <section class="countdown">
+  <img class="countdown__deco countdown__deco--left" src="assets/images/en-ozel-gun-sol.png" alt="" aria-hidden="true">
+  <img class="countdown__deco countdown__deco--right" src="assets/images/en-ozel-gun-sag.png" alt="" aria-hidden="true">
   <div class="wrap">
     <div class="section-head reveal">
       <p class="eyebrow">Geri Sayım</p>
-      <h2>Büyük güne</h2>
+      <h2>En Özel Günümüze Doğru</h2>
     </div>
     <div class="countdown__grid reveal">
       <div class="countdown__item arch-tile"><span class="countdown__value" id="cd-d">--</span><span class="countdown__label">Gün</span></div>
@@ -63,6 +78,7 @@
       <div class="countdown__item arch-tile"><span class="countdown__value" id="cd-m">--</span><span class="countdown__label">Dakika</span></div>
       <div class="countdown__item arch-tile"><span class="countdown__value" id="cd-s">--</span><span class="countdown__label">Saniye</span></div>
     </div>
+    <p class="countdown__note reveal" data-cfg="countdownNote"></p>
   </div>
 </section>
 
@@ -70,13 +86,11 @@
 
 <!-- NOT + FOTOĞRAF -->
 <section class="note">
+  <div class="marquee reveal">
+    <div class="marquee__track" id="marqueeTrack"></div>
+  </div>
   <div class="wrap">
-    <div class="note reveal">
-      <div class="note__frame">
-        <span>[ÇİFT FOTOĞRAFINIZI<br>BURAYA EKLEYİN]</span>
-      </div>
-      <p class="note__text" data-cfg="note"></p>
-    </div>
+    <p class="note__text" data-cfg="note"></p>
   </div>
 </section>
 
