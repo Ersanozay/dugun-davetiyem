@@ -32,10 +32,10 @@
   }
 
   h1,h2,h3,.display{
-    font-family:'Fraunces',serif;
-    font-weight:600;
+    font-family:'Cormorant Garamond',serif;
+    font-weight:500;
     margin:0;
-    letter-spacing:.01em;
+    letter-spacing:.015em;
   }
 
   a{color:inherit}
@@ -52,12 +52,30 @@
   .wrap{max-width:720px;margin:0 auto;padding:0 1.5rem}
 
   /* ============ REVEAL ============ */
-  .reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s ease}
-  .reveal.in-view{opacity:1;transform:translateY(0)}
+  .reveal{
+    opacity:0;
+    filter:blur(5px);
+    transform:translateY(30px) scale(.985);
+    transition:
+      opacity 1s cubic-bezier(.22,1,.36,1) var(--reveal-delay,0s),
+      transform 1s cubic-bezier(.22,1,.36,1) var(--reveal-delay,0s),
+      filter .9s ease var(--reveal-delay,0s);
+  }
+  .reveal.in-view{opacity:1;filter:blur(0);transform:translateY(0) scale(1)}
+  .section-head.reveal > *{
+    opacity:0;
+    filter:blur(3px);
+    transform:translateY(14px);
+    transition:opacity .8s ease,transform .9s cubic-bezier(.22,1,.36,1),filter .8s ease;
+  }
+  .section-head.reveal.in-view > *{opacity:1;filter:blur(0);transform:translateY(0)}
+  .section-head.reveal.in-view > :nth-child(1){transition-delay:.08s}
+  .section-head.reveal.in-view > :nth-child(2){transition-delay:.22s}
+  .section-head.reveal.in-view > :nth-child(3){transition-delay:.36s}
 
   @media (prefers-reduced-motion: reduce){
     *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
-    .reveal{opacity:1;transform:none}
+    .reveal,.section-head.reveal > *{opacity:1;filter:none;transform:none}
   }
 
   /* ============ SCALLOP / ARCH DIVIDER ============ */
@@ -123,18 +141,39 @@
     position:relative;z-index:2;
     display:flex;flex-direction:column;align-items:center;
     color:var(--hero-ink);
-    padding:2rem .5rem;
-    width:100%;
+    width:min(94vw,760px);
+    padding:clamp(3.2rem,7vh,5rem) clamp(.75rem,4vw,2.5rem);
   }
 
-  /* metinler yürüyüş döngüsü başlarken hepsi birlikte belirir (bkz. script.js) */
+  /* Metinler yürüyüş başladığında videodaki gibi sırayla açılır. */
   .hero-fade{
     opacity:0;
-    transform:translateY(16px);
-    transition:opacity .9s ease .1s, transform .9s ease .1s;
+    filter:blur(7px);
+    clip-path:inset(0 0 100% 0);
+    transform:translateY(24px) scale(.98);
+    transition:
+      opacity 1s ease,
+      transform 1.25s cubic-bezier(.22,1,.36,1),
+      filter 1s ease,
+      clip-path 1.25s cubic-bezier(.22,1,.36,1);
   }
-  .hero__content.is-in .hero-fade{opacity:1;transform:translateY(0)}
+  .hero__content.is-in .hero-fade{
+    opacity:1;
+    filter:blur(0);
+    clip-path:inset(0 0 0 0);
+    transform:translateY(0) scale(1);
+    transition-delay:var(--hero-delay,0s);
+  }
 
+  .hero__kicker{
+    margin:0 auto .9rem;
+    font-size:clamp(.58rem,1.4vw,.76rem);
+    font-weight:400;
+    letter-spacing:.28em;
+    line-height:1.5;
+    text-transform:uppercase;
+    text-shadow:0 2px 10px rgba(0,0,0,.35);
+  }
   .hero__label{
     font-family:inherit;
     font-weight:300;
@@ -143,23 +182,38 @@
     line-height:1.7;
     max-width:none;
     white-space:nowrap;
-    margin:0 auto 1.1rem;
+    margin:1.35rem auto 0;
     text-shadow:0 2px 10px rgba(0,0,0,.35);
   }
   .hero__script{
-    font-family:inherit;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    font-family:'Cormorant Garamond',serif;
     font-weight:500;
-    font-size:clamp(2.15rem,9.5vw,4.8rem);
-    line-height:1.1;
+    font-size:clamp(3.15rem,9vw,5.75rem);
+    line-height:.76;
+    letter-spacing:-.02em;
     margin:0;
     max-width:100%;
     white-space:nowrap;
     text-shadow:0 4px 18px rgba(0,0,0,.35);
   }
+  .hero__name{display:block}
+  .hero__amp{
+    display:block;
+    margin:.16em 0 .12em;
+    color:var(--gold-light);
+    font-size:.4em;
+    font-style:italic;
+    font-weight:500;
+    line-height:.75;
+    letter-spacing:0;
+  }
 
   .hero__date{
-    font-family:inherit;
-    margin-top:2.2rem;
+    font-family:'Cormorant Garamond',serif;
+    margin-top:1.7rem;
   }
   .hero__date-grid{
     display:grid;
@@ -169,7 +223,16 @@
     gap:1.1rem;
   }
   .hero__date-side{display:flex;flex-direction:column;align-items:center;gap:.5rem}
-  .hero__date-line{display:block;height:1px;width:100%;background:currentColor;opacity:.75}
+  .hero__date-line{
+    display:block;
+    height:1px;
+    width:100%;
+    background:currentColor;
+    opacity:.75;
+    transform:scaleX(0);
+    transition:transform .9s cubic-bezier(.22,1,.36,1) 2.12s;
+  }
+  .hero__content.is-in .hero__date-line{transform:scaleX(1)}
   .hero__date-month,.hero__date-year{
     font-size:.92rem;letter-spacing:.16em;text-transform:uppercase;line-height:1;
   }
@@ -184,6 +247,27 @@
   .hero__scrolldown p{font-size:.8rem;margin:0}
   @keyframes herobounce{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
 
+  /* Geniş masaüstü ölçeği; mobil ve tablet ölçülerini etkilemez. */
+  @media(min-width:1200px) and (min-height:700px){
+    .hero__content{
+      width:min(86vw,980px);
+      padding-block:clamp(3.6rem,6vh,5.2rem);
+    }
+    .hero__kicker{font-size:.82rem}
+    .hero__script{font-size:clamp(6.1rem,6.2vw,7.25rem)}
+    .hero__label{font-size:clamp(.88rem,.78vw,1rem)}
+    .hero__date{margin-top:2rem}
+    .hero__date-grid{
+      grid-template-columns:108px auto 108px;
+      gap:1.4rem;
+    }
+    .hero__date-month,.hero__date-year{font-size:1.05rem}
+    .hero__date-day{font-size:5rem}
+    .hero__date-weekday{font-size:1.16rem}
+    .hero__scrolldown{margin-top:2.35rem}
+    .hero__scrolldown p{font-size:.9rem}
+  }
+
   /* ============ HERO GATE — "Açmak için dokunun" ============ */
   .hero__gate{
     position:absolute;inset:0;z-index:5;
@@ -193,7 +277,7 @@
     color:#fff;
     border:none;
     cursor:pointer;
-    transition:opacity .7s ease, visibility .7s ease;
+    transition:opacity .7s ease,visibility .7s ease;
   }
   .hero__gate.is-hidden{opacity:0;visibility:hidden;pointer-events:none}
   .hero__gate-ring{
@@ -208,7 +292,7 @@
   /* ============ SECTION SHELLS ============ */
   section{position:relative;padding:5rem 0}
   .section-head{text-align:center;margin-bottom:3rem}
-  .section-head h2{font-size:clamp(1.7rem,4vw,2.2rem);margin-top:.5rem}
+  .section-head h2{font-size:clamp(2rem,5vw,2.85rem);line-height:1.05;margin-top:.5rem}
   .section-head p{color:var(--ink-soft);margin-top:.5rem;font-size:.92rem}
 
   /* ============ COUNTDOWN ============ */
@@ -257,6 +341,16 @@
     text-align:center;
     box-shadow:var(--shadow);
   }
+  .countdown__grid.reveal .countdown__item{
+    opacity:0;
+    transform:translateY(18px) scale(.96);
+    transition:opacity .7s ease,transform .85s cubic-bezier(.22,1,.36,1);
+  }
+  .countdown__grid.reveal.in-view .countdown__item{opacity:1;transform:translateY(0) scale(1)}
+  .countdown__grid.reveal.in-view .countdown__item:nth-child(1){transition-delay:.08s}
+  .countdown__grid.reveal.in-view .countdown__item:nth-child(2){transition-delay:.18s}
+  .countdown__grid.reveal.in-view .countdown__item:nth-child(3){transition-delay:.28s}
+  .countdown__grid.reveal.in-view .countdown__item:nth-child(4){transition-delay:.38s}
   .countdown__value{
     font-family:inherit;
     font-size:clamp(1.6rem,5vw,2.3rem);
@@ -293,7 +387,7 @@
       padding-inline:clamp(3.6rem,18vw,4.8rem);
     }
     .countdown .section-head h2{
-      font-size:clamp(1.4rem,6.8vw,1.8rem);
+      font-size:clamp(1.8rem,7.2vw,2.2rem);
       line-height:1.15;
     }
     .countdown__grid{
@@ -467,7 +561,7 @@
   }
   .detail-card h3{
     position:relative;
-    font-size:clamp(1.55rem,3vw,2rem);
+    font-size:clamp(1.85rem,3.4vw,2.3rem);
     margin:0;
     color:var(--ink);
   }
@@ -574,7 +668,9 @@
   .timeline__day{margin-bottom:3rem}
   .timeline__day:last-child{margin-bottom:0}
   .timeline__day h3{
-    font-size:1.05rem;
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.4rem;
+    font-weight:500;
     text-align:center;
     margin-bottom:1.8rem;
     color:var(--navy);
@@ -599,7 +695,7 @@
     border:2px solid var(--sand);
   }
   .timeline__time{font-size:.72rem;letter-spacing:.12em;color:var(--gold);font-weight:500}
-  .timeline__item h4{font-family:inherit;font-size:1.15rem;font-weight:600;margin-top:.2rem}
+  .timeline__item h4{font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-weight:500;margin-top:.2rem}
   .timeline__item p{margin:.2rem 0 0;font-size:.86rem;color:var(--ink-soft)}
 
   /* ============ RSVP / KATILIM BİLDİRİMİ ============ */
@@ -623,6 +719,19 @@
     box-shadow:0 28px 64px -42px rgba(43,36,32,.55);
     text-align:left;
   }
+  .rsvp__card.reveal > *{
+    opacity:0;
+    transform:translateY(14px);
+    transition:opacity .7s ease,transform .8s cubic-bezier(.22,1,.36,1);
+  }
+  .rsvp__card.reveal.in-view > *{opacity:1;transform:translateY(0)}
+  .rsvp__card.reveal.in-view > :nth-child(1){transition-delay:.08s}
+  .rsvp__card.reveal.in-view > :nth-child(2){transition-delay:.16s}
+  .rsvp__card.reveal.in-view > :nth-child(3){transition-delay:.24s}
+  .rsvp__card.reveal.in-view > :nth-child(4){transition-delay:.32s}
+  .rsvp__card.reveal.in-view > :nth-child(5){transition-delay:.4s}
+  .rsvp__card.reveal.in-view > :nth-child(6){transition-delay:.48s}
+  .rsvp__card.reveal.in-view > :nth-child(7){transition-delay:.56s}
   .rsvp__card::before{
     content:'';
     position:absolute;
@@ -807,6 +916,8 @@
   }
   footer .foot-names{
     position:relative;
+    font-family:'Cormorant Garamond',serif;
+    font-weight:500;
     font-size:clamp(1.45rem,4vw,2rem);
     margin:.9rem 0 0;
     text-shadow:0 2px 14px rgba(251,246,236,.85);

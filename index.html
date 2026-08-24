@@ -6,7 +6,7 @@
 <title>Sabriye &amp; Ersan | Düğün Davetiyesi</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&amp;family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&amp;display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -28,10 +28,11 @@
   <button type="button" class="hero__sound" id="soundBtn" aria-pressed="true" aria-label="Sesi kapat" hidden>🔊</button>
 
   <div class="hero__content" id="heroContent">
-    <p class="hero__label hero-fade" data-cfg="heroLabel"></p>
-    <h1 class="hero__script hero-fade" id="heroScript"></h1>
+    <p class="hero__kicker hero-fade" style="--hero-delay:.12s">Düğünümüze davetlisiniz</p>
+    <h1 class="hero__script hero-fade" style="--hero-delay:.48s" id="heroScript"></h1>
+    <p class="hero__label hero-fade" style="--hero-delay:1.12s" data-cfg="heroLabel"></p>
 
-    <div class="hero__date hero-fade">
+    <div class="hero__date hero-fade" style="--hero-delay:1.72s">
       <div class="hero__date-grid">
         <div class="hero__date-side">
           <span class="hero__date-line"></span>
@@ -48,7 +49,7 @@
       <div class="hero__date-weekday" id="heroWeekday">—</div>
     </div>
 
-    <div class="hero__scrolldown hero-fade">
+    <div class="hero__scrolldown hero-fade" style="--hero-delay:2.35s">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
       <p>Aşağı kaydırınız.</p>
     </div>
@@ -105,8 +106,8 @@
       <p class="eyebrow">Detaylar</p>
       <h2>Bilmeniz gereken her şey</h2>
     </div>
-    <div class="details__grid reveal">
-      <article class="detail-card">
+    <div class="details__grid">
+      <article class="detail-card reveal" style="--reveal-delay:.08s">
         <div class="detail-card__media">
           <img src="assets/images/kina-salonu.webp" alt="Kına salonunun suluboya bina çizimi" loading="lazy">
           <p class="detail-card__tag" data-cfg="ceremony.label"></p>
@@ -118,7 +119,7 @@
           <a class="detail-card__link" data-cfg-href="ceremony.mapUrl" href="#" target="_blank" rel="noopener noreferrer">Yol Tarifi Al</a>
         </div>
       </article>
-      <article class="detail-card">
+      <article class="detail-card reveal" style="--reveal-delay:.2s">
         <div class="detail-card__media">
           <img src="assets/images/dugun-salonu.webp" alt="Düğün salonunun suluboya bina çizimi" loading="lazy">
           <p class="detail-card__tag" data-cfg="wedding.label"></p>
@@ -229,8 +230,8 @@
 
 <!-- FOOTER -->
 <footer>
-  <p class="foot-names"><span data-cfg="partner1"></span><span class="amp">&amp;</span><span data-cfg="partner2"></span></p>
-  <p class="foot-line" data-cfg="dateShort"></p>
+  <p class="foot-names reveal"><span data-cfg="partner1"></span><span class="amp">&amp;</span><span data-cfg="partner2"></span></p>
+  <p class="foot-line reveal" style="--reveal-delay:.18s" data-cfg="dateShort"></p>
 </footer>
 
 <script src="script.js"></script>

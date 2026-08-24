@@ -10,8 +10,15 @@ const CONFIG = {
   countdownNote: "Bugünü en sevgili ailemiz ve arkadaşlarımızla paylaşmaktan dolayı son derece heyecanlıyız.",
   // Kayan fotoğraf şeridi için buraya dosya yollarını sırayla ekle,
   // örn: "assets/images/foto1.jpg". Boş bırakırsan yer tutucu kutular görünür.
-  photos: [],
-  countdownTarget: "2026-10-10T19:30:00+03:00", // Türkiye saati — geri sayım ve hero tarih bloğu
+  photos: [
+    "assets/images/gallery-01.webp",
+    "assets/images/gallery-03.webp",
+    "assets/images/gallery-04.webp",
+    "assets/images/gallery-05.webp",
+    "assets/images/gallery-02.webp",
+    "assets/images/gallery-06.webp"
+  ],
+  countdownTarget: "2026-10-10T19:00:00+03:00", // Türkiye saati — geri sayım ve hero tarih bloğu
   note: "Bugüne kadar bize eşlik ettiğiniz için teşekkür ederiz.\nEn mutlu günümüzü sizlerle paylaşmak istiyoruz.",
   ceremony: {
     label: "Kına Gecesi",
@@ -23,7 +30,7 @@ const CONFIG = {
   wedding: {
     label: "Düğün Daveti",
     venue: "Düğün Salonu",
-    time: "10 Ekim 2026 • 19:30",
+    time: "10 Ekim 2026 • 19:00",
     address: "Konumu haritada görüntüleyebilirsiniz.",
     mapUrl: "https://maps.app.goo.gl/6FZuy3j3o39NYSi79"
   },
@@ -33,11 +40,10 @@ const CONFIG = {
     whatsappNumber: "905349266972"
   },
   timeline: [
-    { day: "2 Ekim 2026", items: [
-      { time:"19:30", title:"Kına Gecesi", desc:"Kına Salonu" }
-    ]},
     { day: "10 Ekim 2026", items: [
-      { time:"19:30", title:"Düğün Daveti", desc:"Düğün Salonu" }
+      { time:"19:00", title:"Karşılama" },
+      { time:"19:45", title:"Resmî Nikâh" },
+      { time:"22:30", title:"After Party" }
     ]}
   ]
 };
@@ -54,7 +60,17 @@ document.querySelectorAll('[data-cfg-href]').forEach(el=>{
 });
 
 /* ---- hero: isim satırı ---- */
-document.getElementById('heroScript').textContent = `${CONFIG.partner1} & ${CONFIG.partner2}`;
+const heroScript = document.getElementById('heroScript');
+const partner1Line = document.createElement('span');
+partner1Line.className = 'hero__name hero__name--first';
+partner1Line.textContent = CONFIG.partner1;
+const heroAmp = document.createElement('span');
+heroAmp.className = 'hero__amp';
+heroAmp.textContent = '&';
+const partner2Line = document.createElement('span');
+partner2Line.className = 'hero__name hero__name--second';
+partner2Line.textContent = CONFIG.partner2;
+heroScript.replaceChildren(partner1Line, heroAmp, partner2Line);
 
 /* ---- hero: büyük tarih bloğu (ay/gün/yıl/gün adı), countdownTarget'tan hesaplanır ---- */
 (function fillHeroDate(){
@@ -86,18 +102,21 @@ document.getElementById('heroScript').textContent = `${CONFIG.partner1} & ${CONF
 
 /* ---- timeline oluştur ---- */
 const timelineWrap = document.getElementById('timelineWrap');
-CONFIG.timeline.forEach(day=>{
+CONFIG.timeline.forEach((day,dayIndex)=>{
   const dayEl = document.createElement('div');
   dayEl.className = 'timeline__day';
   const h3 = document.createElement('h3');
+  h3.className = 'reveal';
+  h3.style.setProperty('--reveal-delay', `${dayIndex * .06}s`);
   h3.textContent = day.day;
   dayEl.appendChild(h3);
   const list = document.createElement('div');
   list.className = 'timeline__list';
-  day.items.forEach(item=>{
+  day.items.forEach((item,itemIndex)=>{
     const it = document.createElement('div');
-    it.className = 'timeline__item';
-    it.innerHTML = `<div class="timeline__time">${item.time}</div><h4>${item.title}</h4><p>${item.desc}</p>`;
+    it.className = 'timeline__item reveal';
+    it.style.setProperty('--reveal-delay', `${.1 + itemIndex * .1}s`);
+    it.innerHTML = `<div class="timeline__time">${item.time}</div><h4>${item.title}</h4>${item.desc ? `<p>${item.desc}</p>` : ''}`;
     list.appendChild(it);
   });
   dayEl.appendChild(list);
