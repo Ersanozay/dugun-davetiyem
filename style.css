@@ -662,18 +662,37 @@
 
   /* ============ FULL-WIDTH VISUAL DIVIDER ============ */
   .visual-divider{
+    --divider-bg:#E4D3B6;
     position:relative;
     display:grid;
     place-items:center;
     min-height:0;
     padding:clamp(.4rem,1.5vw,1rem) 1rem;
     overflow:hidden;
-    background:var(--sand);
+    background:var(--divider-bg);
   }
   .visual-divider__art{
     position:relative;
     width:min(560px,84vw);
     aspect-ratio:1/1;
+    overflow:hidden;
+    isolation:isolate;
+    background:#E4D3B6;
+  }
+  .visual-divider__art::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:3;
+    pointer-events:none;
+    background:radial-gradient(
+      ellipse 67% 64% at 50% 50%,
+      rgba(228,211,182,0) 33%,
+      rgba(228,211,182,.08) 48%,
+      rgba(228,211,182,.36) 68%,
+      rgba(228,211,182,.78) 86%,
+      #E4D3B6 100%
+    );
   }
   .visual-divider__image{
     position:absolute;

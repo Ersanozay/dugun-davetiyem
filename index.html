@@ -3,11 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sabriye &amp; Ersan | Düğün Davetiyesi</title>
+<title>Düğün Davetiyem</title>
+<meta name="description" content="Sabriye ve Ersan'ın düğün davetiyesi ve birlikte yazdıkları hikâye.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&amp;family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&amp;display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="story/story.css">
 </head>
 <body>
 
@@ -156,6 +158,47 @@
 
 <div class="scallop" style="--target:var(--ivory);transform:rotate(180deg)"></div>
 
+<!-- HİKÂYEMİZ — davetiyenin ardından dokunarak açılır. -->
+<section class="story-disclosure" id="hikayemiz" aria-labelledby="story-title">
+  <details class="story-disclosure__details" id="storyDisclosure">
+    <summary class="story-disclosure__summary">
+      <span class="story-disclosure__mark" aria-hidden="true">♡</span>
+      <span class="eyebrow">Hikâyemiz</span>
+      <span class="story-disclosure__title" id="story-title" role="heading" aria-level="2">
+        <span>Birlikte yazdığımız</span>
+        <span>beş güzel an</span>
+      </span>
+      <p>Tanışmamızdan bugüne uzanan küçük bir yolculuk.</p>
+      <span class="story-disclosure__cue">
+        <i aria-hidden="true"></i>
+        <em><span class="story-disclosure__closed-label">Hikâyeyi açmak için dokunun</span><span class="story-disclosure__open-label">Hikâyeyi kapat</span></em>
+        <i aria-hidden="true"></i>
+      </span>
+      <span class="story-disclosure__arrow" aria-hidden="true">⌄</span>
+    </summary>
+
+    <div class="story-disclosure__panel">
+      <div class="story-disclosure__panel-inner">
+        <p class="story-disclosure__hint">Aşağı kaydırdıkça anılarımız canlanır.</p>
+        <div class="story">
+          <div id="storyScenes" class="story__scenes"></div>
+
+          <noscript>
+            <div class="story-fallback wrap">
+              <article><p>01 · Kütüphanede tanışma</p><h3>Hikâyemiz sessizce bir kütüphanede başladı.</h3></article>
+              <article><p>02 · İlk buluşma</p><h3>Kartlar açıldıkça, biz de birbirimize açıldık.</h3></article>
+              <article><p>03 · Mezuniyet</p><h3>Zaman geçti, birlikte büyüdük; hayallerimiz aynı gelecekte buluştu.</h3></article>
+              <article><p>04 · Evlilik teklifi</p><h3>Bir akşam, hayatımızın en güzel sorusuna dönüştü.</h3></article>
+              <article><p>05 · Düğün</p><h3>Şimdi hikâyemizin en güzel bölümünü sizinle kutluyoruz.</h3></article>
+            </div>
+          </noscript>
+          <div id="story-end" class="story__end" tabindex="-1"></div>
+        </div>
+      </div>
+    </div>
+  </details>
+</section>
+
 <!-- KATILIM BİLDİRİMİ / RSVP -->
 <section class="rsvp" id="katilim">
   <div class="wrap rsvp__wrap">
@@ -235,6 +278,7 @@
   <p class="foot-line reveal" style="--reveal-delay:.18s" data-cfg="dateShort"></p>
 </footer>
 
-<script src="script.js"></script>
+<script type="module" src="story/story.js"></script>
+<script type="module" src="script.js"></script>
 </body>
 </html>

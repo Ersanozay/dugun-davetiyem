@@ -9,14 +9,15 @@ const CONFIG = {
   heroLabel: "BU MUTLU GÜNÜMÜZDE SİZLERİ DE ARAMIZDA GÖRMEKTEN MUTLULUK DUYARIZ",
   countdownNote: "Bugünü en sevgili ailemiz ve arkadaşlarımızla paylaşmaktan dolayı son derece heyecanlıyız.",
   // Kayan fotoğraf şeridi için buraya dosya yollarını sırayla ekle,
-  // örn: "assets/images/foto1.jpg". Boş bırakırsan yer tutucu kutular görünür.
+  // örn: new URL("assets/images/foto1.jpg", import.meta.url).href.
+  // Boş bırakırsan yer tutucu kutular görünür.
   photos: [
-    "assets/images/gallery-01.webp",
-    "assets/images/gallery-03.webp",
-    "assets/images/gallery-04.webp",
-    "assets/images/gallery-05.webp",
-    "assets/images/gallery-02.webp",
-    "assets/images/gallery-06.webp"
+    new URL("assets/images/gallery-01.webp", import.meta.url).href,
+    new URL("assets/images/gallery-03.webp", import.meta.url).href,
+    new URL("assets/images/gallery-04.webp", import.meta.url).href,
+    new URL("assets/images/gallery-05.webp", import.meta.url).href,
+    new URL("assets/images/gallery-02.webp", import.meta.url).href,
+    new URL("assets/images/gallery-06.webp", import.meta.url).href
   ],
   countdownTarget: "2026-10-10T19:00:00+03:00", // Türkiye saati — geri sayım ve hero tarih bloğu
   note: "Bugüne kadar bize eşlik ettiğiniz için teşekkür ederiz.\nEn mutlu günümüzü sizlerle paylaşmak istiyoruz.",
