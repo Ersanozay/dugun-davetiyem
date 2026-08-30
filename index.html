@@ -8,8 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&amp;family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&amp;display=swap" rel="stylesheet">
-  <script type="module" crossorigin src="/assets/index-CxFrmP58.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-CdWMQ8tJ.css">
+  <script type="module" crossorigin src="/assets/index-KGQ0VVlX.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-Blp4gqqq.css">
 </head>
 <body>
 
@@ -23,8 +23,8 @@
      sonsuz döngüde kalır. Metinler tam yürüyüş başlarken belirir. -->
 <section class="hero">
   <video class="hero__video" id="introClip" src="/assets/intro-clip-Df9IJ4Ly.mp4" poster="/assets/hero-poster-CnNW8O-U.jpg" muted playsinline preload="auto"></video>
-  <video class="hero__video hero__video--loop" id="loopClip" src="/assets/loop-clip-D2UaBwAf.mp4" muted loop playsinline preload="auto"></video>
-  <audio id="bgMusic" src="/assets/song-BrIHwZaH.mp3" loop preload="auto"></audio>
+  <video class="hero__video hero__video--loop" id="loopClip" src="/assets/loop-clip-D2UaBwAf.mp4" muted loop playsinline preload="none"></video>
+  <audio id="bgMusic" src="/assets/song-BrIHwZaH.mp3" loop preload="none"></audio>
   <div class="hero__scrim"></div>
 
   <button type="button" class="hero__sound" id="soundBtn" aria-pressed="true" aria-label="Sesi kapat" hidden>🔊</button>
@@ -150,7 +150,7 @@
   <div class="wrap">
     <div class="section-head reveal">
       <p class="eyebrow">Akış</p>
-      <h2>Günün planı</h2>
+      <h2>Düğün Gününün Akışı</h2>
     </div>
     <div id="timelineWrap"></div>
   </div>
@@ -180,6 +180,7 @@
     <div class="story-disclosure__panel">
       <div class="story-disclosure__panel-inner">
         <p class="story-disclosure__hint">Aşağı kaydırdıkça anılarımız canlanır.</p>
+        <p class="story-disclosure__loading" id="storyLoadingStatus" role="status" aria-live="polite" hidden>Hikâye hazırlanıyor…</p>
         <div class="story">
           <div id="storyScenes" class="story__scenes"></div>
 
