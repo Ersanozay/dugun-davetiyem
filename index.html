@@ -555,10 +555,10 @@
             disable-pan
             touch-action="pan-y"
             interaction-prompt="none"
-            camera-orbit="-12deg 80deg 106%"
+            camera-orbit="-12deg 80deg 141%"
             camera-target="0m 0.38m 0m"
-            min-camera-orbit="auto 66deg 92%"
-            max-camera-orbit="auto 98deg 122%"
+            min-camera-orbit="auto 66deg 118%"
+            max-camera-orbit="auto 98deg 162%"
             field-of-view="28deg"
             min-field-of-view="24deg"
             max-field-of-view="31deg"
@@ -614,17 +614,17 @@
 
         const applyResponsiveViewerTuning = () => {
           if (mobileMq.matches) {
-            viewer.setAttribute('camera-orbit', '-12deg 79deg 90%');
-            viewer.setAttribute('min-camera-orbit', 'auto 66deg 84%');
-            viewer.setAttribute('max-camera-orbit', 'auto 98deg 110%');
+            viewer.setAttribute('camera-orbit', '-12deg 79deg 120%');
+            viewer.setAttribute('min-camera-orbit', 'auto 66deg 108%');
+            viewer.setAttribute('max-camera-orbit', 'auto 98deg 145%');
             viewer.setAttribute('field-of-view', '24deg');
             viewer.setAttribute('min-field-of-view', '22deg');
             viewer.setAttribute('max-field-of-view', '27deg');
             viewer.setAttribute('orbit-sensitivity', '1.34');
           } else {
-            viewer.setAttribute('camera-orbit', '-12deg 80deg 106%');
-            viewer.setAttribute('min-camera-orbit', 'auto 66deg 92%');
-            viewer.setAttribute('max-camera-orbit', 'auto 98deg 122%');
+            viewer.setAttribute('camera-orbit', '-12deg 80deg 141%');
+            viewer.setAttribute('min-camera-orbit', 'auto 66deg 118%');
+            viewer.setAttribute('max-camera-orbit', 'auto 98deg 162%');
             viewer.setAttribute('field-of-view', '28deg');
             viewer.setAttribute('min-field-of-view', '24deg');
             viewer.setAttribute('max-field-of-view', '31deg');
