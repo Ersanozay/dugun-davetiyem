@@ -635,7 +635,14 @@
         };
 
         viewer.addEventListener('progress', (event) => {
-          setLoaderProgress(event.detail?.totalProgress || 0);
+          const progress = event.detail?.totalProgress || 0;
+          setLoaderProgress(progress);
+          // model-viewer bazı tarayıcılarda %100 ilerleme bildirdikten sonra
+          // load olayını gecikmeli gönderebiliyor. Görsel hazırsa yükleme katmanını
+          // ekranda bırakmamak için güvenli bir yedek davranış kullanıyoruz.
+          if (progress >= 0.999 && loader) {
+            window.setTimeout(() => loader.classList.add('is-hidden'), 350);
+          }
         });
 
         viewer.addEventListener('load', () => {
