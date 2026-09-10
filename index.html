@@ -643,8 +643,26 @@
           setLoaderProgress(progress);
         });
 
+        const hideNativeProgressBar = () => {
+          try {
+            const root = viewer.shadowRoot;
+            if (!root) return;
+            root.querySelectorAll('.progress-bar, .update-bar').forEach((el) => {
+              el.style.display = 'none';
+              el.style.height = '0';
+              el.style.opacity = '0';
+            });
+          } catch (e) {}
+        };
+
+        customElements.whenDefined('model-viewer').then(() => {
+          hideNativeProgressBar();
+          requestAnimationFrame(hideNativeProgressBar);
+        });
+
         viewer.addEventListener('load', () => {
           hideLoader();
+          hideNativeProgressBar();
           applyResponsiveViewerTuning();
           if ('resetTurntableRotation' in viewer) {
             try { viewer.resetTurntableRotation(0); } catch (e) {}

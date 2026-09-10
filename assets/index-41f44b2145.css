@@ -73,3 +73,24 @@ footer .foot-line{margin:.45rem 0 0 !important}
   .model-showcase__stage{height:min(78vw,330px) !important;min-height:265px !important}
   footer{min-height:285px !important;padding-top:2rem !important}
 }
+
+
+/* Final tighter spacing override: bring model slightly closer to footer text */
+.model-showcase{padding:0 0 .08rem !important}
+.model-showcase__stage{height:clamp(320px,34vw,405px) !important}
+footer{min-height:clamp(310px,36vw,445px) !important;padding:clamp(2.55rem,4.8vw,3.8rem) 1.5rem 2.1rem !important}
+footer .foot-names{margin:.18rem 0 0 !important}
+footer .foot-line{margin:.35rem 0 0 !important}
+@media (max-width: 700px){
+  .model-showcase{padding:0 !important}
+  .model-showcase__stage{height:min(69vw,325px) !important;min-height:255px !important}
+  footer{min-height:275px !important;padding:1.6rem 1.1rem 1.75rem !important}
+}
+@media (max-width: 390px){
+  .model-showcase__stage{height:min(72vw,305px) !important;min-height:245px !important}
+  footer{min-height:262px !important;padding-top:1.45rem !important}
+}
+
+
+/* Hide model-viewer native loading progress line */
+.model-showcase__viewer{--progress-bar-height:0px !important;--progress-bar-color:transparent !important}
