@@ -555,20 +555,24 @@
             loading="lazy"
             reveal="auto"
             camera-controls
+            auto-rotate
+            auto-rotate-delay="0"
+            rotation-per-second="16deg"
+            orbit-sensitivity="1.18"
             disable-zoom
             disable-pan
             touch-action="pan-y"
             interaction-prompt="none"
-            camera-orbit="0deg 82deg 112%"
-            camera-target="0m 0.409m 0m"
-            min-camera-orbit="auto 64deg 100%"
-            max-camera-orbit="auto 100deg 128%"
-            field-of-view="30deg"
-            min-field-of-view="27deg"
-            max-field-of-view="33deg"
-            interpolation-decay="180"
-            shadow-intensity="0.75"
-            shadow-softness="0.9"
+            camera-orbit="-18deg 80deg 110%"
+            camera-target="0m 0.38m 0m"
+            min-camera-orbit="auto 66deg 98%"
+            max-camera-orbit="auto 98deg 126%"
+            field-of-view="29deg"
+            min-field-of-view="26deg"
+            max-field-of-view="32deg"
+            interpolation-decay="90"
+            shadow-intensity="0.68"
+            shadow-softness="0.92"
             exposure="1.04"
             environment-image="neutral"
           ></model-viewer>
@@ -610,45 +614,39 @@
 
         const loader = document.getElementById('modelShowcaseLoader');
         const loaderText = document.getElementById('modelShowcaseLoaderText');
-        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-        const radiansToDegrees = 180 / Math.PI;
-        const degreesToRadians = Math.PI / 180;
+        const hint = document.querySelector('.model-showcase__hint');
+        let hintHidden = false;
 
-        let modelLoaded = false;
-        let inView = false;
-        let interacting = false;
-        let resumeAt = 0;
-        let baseTheta = 0;
-        let swingSide = 1;
-        let swingTimer = null;
+        const hideHint = () => {
+          if (hintHidden || !hint) return;
+          hintHidden = true;
+          hint.style.opacity = '0';
+          hint.style.transform = 'translateX(-50%) translateY(8px)';
+        };
 
-        const captureUserOrbit = () => {
-          if (!viewer.getCameraOrbit) return;
-          const orbit = viewer.getCameraOrbit();
-          baseTheta = orbit.theta;
+        const hideLoader = () => {
+          if (loader) loader.classList.add('is-hidden');
         };
 
         const setLoaderProgress = (progress) => {
-          if (!loader || !loaderText) return;
+          if (!loaderText) return;
           const pct = Math.max(0, Math.min(100, Math.round(progress * 100)));
           loaderText.textContent = pct > 0 ? `3D model hazırlanıyor · %${pct}` : '3D model hazırlanıyor';
+          if (pct >= 100) {
+            window.setTimeout(hideLoader, 250);
+          }
         };
 
         viewer.addEventListener('progress', (event) => {
           const progress = event.detail?.totalProgress || 0;
           setLoaderProgress(progress);
-          // model-viewer bazı tarayıcılarda %100 ilerleme bildirdikten sonra
-          // load olayını gecikmeli gönderebiliyor. Görsel hazırsa yükleme katmanını
-          // ekranda bırakmamak için güvenli bir yedek davranış kullanıyoruz.
-          if (progress >= 0.999 && loader) {
-            window.setTimeout(() => loader.classList.add('is-hidden'), 350);
-          }
         });
 
         viewer.addEventListener('load', () => {
-          modelLoaded = true;
-          captureUserOrbit();
-          if (loader) loader.classList.add('is-hidden');
+          hideLoader();
+          if ('inputSensitivity' in viewer) {
+            try { viewer.inputSensitivity = 1.12; } catch (e) {}
+          }
         });
 
         viewer.addEventListener('error', () => {
@@ -657,62 +655,17 @@
           loaderText.textContent = '3D model yüklenemedi';
         });
 
-        viewer.addEventListener('camera-change', (event) => {
-          if (event.detail?.source !== 'user-interaction') return;
-          captureUserOrbit();
-          resumeAt = Date.now() + 2600;
-        });
-
-        const interactionStart = () => {
-          interacting = true;
-          captureUserOrbit();
-        };
-
-        const interactionEnd = () => {
-          if (!interacting) return;
-          interacting = false;
-          captureUserOrbit();
-          resumeAt = Date.now() + 2400;
-        };
-
-        viewer.addEventListener('pointerdown', interactionStart);
-        window.addEventListener('pointerup', interactionEnd, { passive: true });
-        window.addEventListener('pointercancel', interactionEnd, { passive: true });
-
-        const swing = () => {
-          if (!modelLoaded || !inView || interacting || reducedMotion.matches || document.hidden || Date.now() < resumeAt) return;
-          if (!viewer.getCameraOrbit) return;
-
-          const orbit = viewer.getCameraOrbit();
-          const amplitude = 10 * degreesToRadians;
-          const targetTheta = baseTheta + amplitude * swingSide;
-          swingSide *= -1;
-          viewer.cameraOrbit = `${targetTheta * radiansToDegrees}deg ${orbit.phi * radiansToDegrees}deg ${orbit.radius}m`;
-        };
-
-        const startSwing = () => {
-          if (swingTimer) return;
-          swingTimer = window.setInterval(swing, 2550);
-          window.setTimeout(swing, 700);
-        };
+        viewer.addEventListener('pointerdown', hideHint, { passive: true });
+        viewer.addEventListener('touchstart', hideHint, { passive: true });
 
         const observer = new IntersectionObserver((entries) => {
-          inView = entries[0]?.isIntersecting || false;
-          if (inView) {
-            if (!viewer.getAttribute('src') && viewer.dataset.src) {
-              viewer.setAttribute('src', viewer.dataset.src);
-            }
-            startSwing();
+          const isVisible = entries[0]?.isIntersecting || false;
+          if (isVisible && !viewer.getAttribute('src') && viewer.dataset.src) {
+            viewer.setAttribute('src', viewer.dataset.src);
           }
-        }, { rootMargin: '700px 0px', threshold: 0.01 });
-        observer.observe(viewer);
+        }, { rootMargin: '650px 0px', threshold: 0.01 });
 
-        reducedMotion.addEventListener?.('change', () => {
-          if (!reducedMotion.matches) {
-            captureUserOrbit();
-            resumeAt = Date.now() + 800;
-          }
-        });
+        observer.observe(viewer);
       })();
     </script>
   </body>
