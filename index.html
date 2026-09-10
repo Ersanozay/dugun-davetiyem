@@ -614,12 +614,12 @@
 
         const applyResponsiveViewerTuning = () => {
           if (mobileMq.matches) {
-            viewer.setAttribute('camera-orbit', '-12deg 79deg 120%');
-            viewer.setAttribute('min-camera-orbit', 'auto 66deg 108%');
-            viewer.setAttribute('max-camera-orbit', 'auto 98deg 145%');
-            viewer.setAttribute('field-of-view', '24deg');
-            viewer.setAttribute('min-field-of-view', '22deg');
-            viewer.setAttribute('max-field-of-view', '27deg');
+            viewer.setAttribute('camera-orbit', '-12deg 79deg 100%');
+            viewer.setAttribute('min-camera-orbit', 'auto 66deg 90%');
+            viewer.setAttribute('max-camera-orbit', 'auto 98deg 121%');
+            viewer.setAttribute('field-of-view', '23deg');
+            viewer.setAttribute('min-field-of-view', '21deg');
+            viewer.setAttribute('max-field-of-view', '26deg');
             viewer.setAttribute('orbit-sensitivity', '1.34');
           } else {
             viewer.setAttribute('camera-orbit', '-12deg 80deg 141%');
