@@ -544,7 +544,7 @@
             class="model-showcase__viewer"
             data-src="/assets/wedding-couple-3d.glb"
             alt="Sabriye ve Ersan'ın üç boyutlu düğün çifti modeli"
-            loading="lazy"
+            loading="eager"
             reveal="auto"
             camera-controls
             auto-rotate
@@ -675,14 +675,20 @@
           loaderText.textContent = '3D model yüklenemedi';
         });
 
-        const observer = new IntersectionObserver((entries) => {
-          const isVisible = entries[0]?.isIntersecting || false;
-          if (isVisible && !viewer.getAttribute('src') && viewer.dataset.src) {
+        const startModelLoad = () => {
+          if (!viewer.getAttribute('src') && viewer.dataset.src) {
             viewer.setAttribute('src', viewer.dataset.src);
           }
-        }, { rootMargin: '650px 0px', threshold: 0.01 });
+        };
 
-        observer.observe(viewer);
+        // Modeli kullanıcı 3D bölüme gelmeden erkenden arka planda yükle.
+        // Kısa gecikme, hero video ve ilk görünümün ağ önceliğini korur.
+        const queueEarlyModelLoad = () => window.setTimeout(startModelLoad, 2000);
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', queueEarlyModelLoad, { once: true });
+        } else {
+          queueEarlyModelLoad();
+        }
       })();
     </script>
   </body>
