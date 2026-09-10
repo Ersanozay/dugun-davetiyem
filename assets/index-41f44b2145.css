@@ -56,3 +56,20 @@
 @media (max-width: 390px){
   .model-showcase__stage{height:min(120vw,540px) !important;min-height:380px !important}
 }
+
+
+/* Tighten gap between 3D model and footer text */
+.model-showcase{padding:clamp(.35rem,1.6vw,.8rem) 0 clamp(.2rem,1vw,.6rem) !important}
+.model-showcase__stage{height:clamp(340px,36vw,430px) !important}
+footer{min-height:clamp(330px,38vw,470px) !important;padding:clamp(3.2rem,6vw,4.6rem) 1.5rem 2.4rem !important}
+footer .foot-names{margin:.35rem 0 0 !important}
+footer .foot-line{margin:.45rem 0 0 !important}
+@media (max-width: 700px){
+  .model-showcase{padding:0 0 .3rem !important}
+  .model-showcase__stage{height:min(74vw,350px) !important;min-height:285px !important}
+  footer{min-height:300px !important;padding:2.2rem 1.2rem 2rem !important}
+}
+@media (max-width: 390px){
+  .model-showcase__stage{height:min(78vw,330px) !important;min-height:265px !important}
+  footer{min-height:285px !important;padding-top:2rem !important}
+}
