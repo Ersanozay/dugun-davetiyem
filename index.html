@@ -47,8 +47,8 @@
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&amp;family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&amp;display=swap"
       rel="stylesheet"
     />
-    <script type="module" crossorigin src="/assets/index-DDVZIcAT.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-C8hHWclC.css">
+    <script type="module" crossorigin src="/assets/index-DbX1w8Fu.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-B0TxNfh6.css">
   </head>
   <body>
     <!-- ======================================================
@@ -102,10 +102,10 @@
     <div class="scallop" style="--target: var(--sand)"></div>
 
     <nav class="invitation-nav" aria-label="Davetiye bölümleri">
-      <a href="#detaylar">Yer &amp; tarih</a>
-      <a href="#akis">Günün akışı</a>
-      <a href="#hikayemiz">Hikâyemiz</a>
-      <a href="#katilim">Katılım</a>
+      <a href="#detaylar">Yer &amp; tarih<svg class="nav-brush" viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path pathLength="1" d="M 4 32 C 9 8 23 7 38 23 S 63 40 78 21 S 93 8 99 8" /></svg></a>
+      <a href="#akis">Günün akışı<svg class="nav-brush" viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path pathLength="1" d="M 4 32 C 9 8 23 7 38 23 S 63 40 78 21 S 93 8 99 8" /></svg></a>
+      <a href="#hikayemiz">Hikâyemiz<svg class="nav-brush" viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path pathLength="1" d="M 4 32 C 9 8 23 7 38 23 S 63 40 78 21 S 93 8 99 8" /></svg></a>
+      <a href="#katilim">Katılım<svg class="nav-brush" viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path pathLength="1" d="M 4 32 C 9 8 23 7 38 23 S 63 40 78 21 S 93 8 99 8" /></svg></a>
     </nav>
     <!-- COUNTDOWN -->
     <section class="countdown" id="geri-sayim" tabindex="-1">
@@ -168,7 +168,7 @@
 
     <!-- NOT + FOTOĞRAF -->
     <section class="note">
-      <div class="marquee">
+      <div class="marquee" aria-describedby="galleryHint">
         <div class="marquee__track" id="marqueeTrack"></div>
       </div>
       <div class="gallery-controls">
@@ -181,6 +181,7 @@
         >
           Fotoğrafları durdur ve incele
         </button>
+        <p class="gallery-hint" id="galleryHint" hidden>Diğer fotoğraflar için yana kaydırın.</p>
       </div>
       <div class="photo-divider reveal" aria-hidden="true">
         <img
@@ -387,9 +388,8 @@
     <section class="rsvp" id="katilim">
       <div class="wrap rsvp__wrap">
         <div class="section-head reveal">
-          <p class="eyebrow">Katılım Bildirimi</p>
-          <h2>Bu özel günümüzde yanımızda olacak mısınız?</h2>
-          <p>
+          <h2 class="eyebrow">Katılım Bildirimi</h2>
+          <p class="rsvp__intro">
             Katılım durumunuzu paylaşmanız, hazırlıklarımızı planlamamıza
             yardımcı olacaktır.
           </p>
