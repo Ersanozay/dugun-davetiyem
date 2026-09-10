@@ -538,14 +538,6 @@
     <section class="model-showcase" aria-label="Sabriye ve Ersan 3D modeli">
       <div class="wrap model-showcase__wrap">
         <div class="model-showcase__stage reveal">
-          <div class="model-showcase__topline" aria-hidden="true">
-            <span class="model-showcase__badge"><i></i> 3D MODEL</span>
-            <span class="model-showcase__degree">360°</span>
-          </div>
-
-          <div class="model-showcase__halo" aria-hidden="true"></div>
-          <div class="model-showcase__orbit model-showcase__orbit--one" aria-hidden="true"></div>
-          <div class="model-showcase__orbit model-showcase__orbit--two" aria-hidden="true"></div>
 
           <model-viewer
             id="weddingCoupleViewer"
@@ -557,22 +549,22 @@
             camera-controls
             auto-rotate
             auto-rotate-delay="0"
-            rotation-per-second="16deg"
-            orbit-sensitivity="1.18"
+            rotation-per-second="-24deg"
+            orbit-sensitivity="1.28"
             disable-zoom
             disable-pan
             touch-action="pan-y"
             interaction-prompt="none"
-            camera-orbit="-18deg 80deg 110%"
+            camera-orbit="-12deg 80deg 106%"
             camera-target="0m 0.38m 0m"
-            min-camera-orbit="auto 66deg 98%"
-            max-camera-orbit="auto 98deg 126%"
-            field-of-view="29deg"
-            min-field-of-view="26deg"
-            max-field-of-view="32deg"
-            interpolation-decay="90"
-            shadow-intensity="0.68"
-            shadow-softness="0.92"
+            min-camera-orbit="auto 66deg 92%"
+            max-camera-orbit="auto 98deg 122%"
+            field-of-view="28deg"
+            min-field-of-view="24deg"
+            max-field-of-view="31deg"
+            interpolation-decay="80"
+            shadow-intensity="0"
+            shadow-softness="0"
             exposure="1.04"
             environment-image="neutral"
           ></model-viewer>
@@ -580,15 +572,6 @@
           <div class="model-showcase__loader" id="modelShowcaseLoader" role="status" aria-live="polite">
             <span class="model-showcase__loader-ring" aria-hidden="true"></span>
             <span id="modelShowcaseLoaderText">3D model hazırlanıyor</span>
-          </div>
-
-          <div class="model-showcase__hint" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-              <path d="M7 11.5V9.7a1.45 1.45 0 0 1 2.9 0v1.1-3a1.45 1.45 0 0 1 2.9 0v2.5-1.4a1.45 1.45 0 1 1 2.9 0v2.1-1a1.45 1.45 0 0 1 2.9 0v3.8c0 4.3-2.5 6.2-6.1 6.2h-.8c-2.2 0-3.4-.8-4.6-2.2L4.7 15a1.4 1.4 0 0 1 2-2l.3.3" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <span>TUT &amp; DÖNDÜR</span>
-            <i></i>
-            <span>360° İNCELE</span>
           </div>
         </div>
       </div>
@@ -614,15 +597,7 @@
 
         const loader = document.getElementById('modelShowcaseLoader');
         const loaderText = document.getElementById('modelShowcaseLoaderText');
-        const hint = document.querySelector('.model-showcase__hint');
-        let hintHidden = false;
-
-        const hideHint = () => {
-          if (hintHidden || !hint) return;
-          hintHidden = true;
-          hint.style.opacity = '0';
-          hint.style.transform = 'translateX(-50%) translateY(8px)';
-        };
+        const mobileMq = window.matchMedia('(max-width: 700px)');
 
         const hideLoader = () => {
           if (loader) loader.classList.add('is-hidden');
@@ -633,9 +608,35 @@
           const pct = Math.max(0, Math.min(100, Math.round(progress * 100)));
           loaderText.textContent = pct > 0 ? `3D model hazırlanıyor · %${pct}` : '3D model hazırlanıyor';
           if (pct >= 100) {
-            window.setTimeout(hideLoader, 250);
+            window.setTimeout(hideLoader, 220);
           }
         };
+
+        const applyResponsiveViewerTuning = () => {
+          if (mobileMq.matches) {
+            viewer.setAttribute('camera-orbit', '-12deg 79deg 90%');
+            viewer.setAttribute('min-camera-orbit', 'auto 66deg 84%');
+            viewer.setAttribute('max-camera-orbit', 'auto 98deg 110%');
+            viewer.setAttribute('field-of-view', '24deg');
+            viewer.setAttribute('min-field-of-view', '22deg');
+            viewer.setAttribute('max-field-of-view', '27deg');
+            viewer.setAttribute('orbit-sensitivity', '1.34');
+          } else {
+            viewer.setAttribute('camera-orbit', '-12deg 80deg 106%');
+            viewer.setAttribute('min-camera-orbit', 'auto 66deg 92%');
+            viewer.setAttribute('max-camera-orbit', 'auto 98deg 122%');
+            viewer.setAttribute('field-of-view', '28deg');
+            viewer.setAttribute('min-field-of-view', '24deg');
+            viewer.setAttribute('max-field-of-view', '31deg');
+            viewer.setAttribute('orbit-sensitivity', '1.28');
+          }
+          if ('inputSensitivity' in viewer) {
+            try { viewer.inputSensitivity = mobileMq.matches ? 1.28 : 1.18; } catch (e) {}
+          }
+        };
+
+        applyResponsiveViewerTuning();
+        mobileMq.addEventListener?.('change', applyResponsiveViewerTuning);
 
         viewer.addEventListener('progress', (event) => {
           const progress = event.detail?.totalProgress || 0;
@@ -644,8 +645,9 @@
 
         viewer.addEventListener('load', () => {
           hideLoader();
-          if ('inputSensitivity' in viewer) {
-            try { viewer.inputSensitivity = 1.12; } catch (e) {}
+          applyResponsiveViewerTuning();
+          if ('resetTurntableRotation' in viewer) {
+            try { viewer.resetTurntableRotation(0); } catch (e) {}
           }
         });
 
@@ -654,9 +656,6 @@
           loader.classList.add('is-error');
           loaderText.textContent = '3D model yüklenemedi';
         });
-
-        viewer.addEventListener('pointerdown', hideHint, { passive: true });
-        viewer.addEventListener('touchstart', hideHint, { passive: true });
 
         const observer = new IntersectionObserver((entries) => {
           const isVisible = entries[0]?.isIntersecting || false;
