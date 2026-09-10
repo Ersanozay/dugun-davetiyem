@@ -46,7 +46,10 @@
     <link
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&amp;family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&amp;display=swap"
       rel="stylesheet"
-    />
+    />
+
+
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.3.1/model-viewer.min.js"></script>
     <script type="module" crossorigin src="/assets/index-DbX1w8Fu.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-41f44b2145.css">
   </head>
@@ -389,7 +392,7 @@
       <div class="wrap rsvp__wrap">
         <div class="section-head reveal">
           <p class="eyebrow">Katılım Bildirimi</p>
-          <h2>Bu özel günümüzde yanımızda olabilecek misiniz?</h2>
+          <h2 class="rsvp-question"><span>Bu özel günümüzde yanımızda</span> <span>olabilecek misiniz?</span></h2>
         </div>
 
         <form class="rsvp__card reveal" id="rsvpForm">
@@ -531,6 +534,62 @@
       </div>
     </section>
 
+    <!-- INTERAKTİF 3D ÇİFT MODELİ -->
+    <section class="model-showcase" aria-label="Sabriye ve Ersan 3D modeli">
+      <div class="wrap model-showcase__wrap">
+        <div class="model-showcase__stage reveal">
+          <div class="model-showcase__topline" aria-hidden="true">
+            <span class="model-showcase__badge"><i></i> 3D MODEL</span>
+            <span class="model-showcase__degree">360°</span>
+          </div>
+
+          <div class="model-showcase__halo" aria-hidden="true"></div>
+          <div class="model-showcase__orbit model-showcase__orbit--one" aria-hidden="true"></div>
+          <div class="model-showcase__orbit model-showcase__orbit--two" aria-hidden="true"></div>
+
+          <model-viewer
+            id="weddingCoupleViewer"
+            class="model-showcase__viewer"
+            data-src="/assets/wedding-couple-3d.glb"
+            alt="Sabriye ve Ersan'ın üç boyutlu düğün çifti modeli"
+            loading="lazy"
+            reveal="auto"
+            camera-controls
+            disable-zoom
+            disable-pan
+            touch-action="pan-y"
+            interaction-prompt="none"
+            camera-orbit="0deg 82deg 112%"
+            camera-target="0m 0.409m 0m"
+            min-camera-orbit="auto 64deg 100%"
+            max-camera-orbit="auto 100deg 128%"
+            field-of-view="30deg"
+            min-field-of-view="27deg"
+            max-field-of-view="33deg"
+            interpolation-decay="180"
+            shadow-intensity="0.75"
+            shadow-softness="0.9"
+            exposure="1.04"
+            environment-image="neutral"
+          ></model-viewer>
+
+          <div class="model-showcase__loader" id="modelShowcaseLoader" role="status" aria-live="polite">
+            <span class="model-showcase__loader-ring" aria-hidden="true"></span>
+            <span id="modelShowcaseLoaderText">3D model hazırlanıyor</span>
+          </div>
+
+          <div class="model-showcase__hint" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+              <path d="M7 11.5V9.7a1.45 1.45 0 0 1 2.9 0v1.1-3a1.45 1.45 0 0 1 2.9 0v2.5-1.4a1.45 1.45 0 1 1 2.9 0v2.1-1a1.45 1.45 0 0 1 2.9 0v3.8c0 4.3-2.5 6.2-6.1 6.2h-.8c-2.2 0-3.4-.8-4.6-2.2L4.7 15a1.4 1.4 0 0 1 2-2l.3.3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>TUT &amp; DÖNDÜR</span>
+            <i></i>
+            <span>360° İNCELE</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- FOOTER -->
     <footer>
       <p class="foot-names reveal">
@@ -543,5 +602,111 @@
         data-cfg="dateShort"
       ></p>
     </footer>
+
+    <script>
+      (() => {
+        const viewer = document.getElementById('weddingCoupleViewer');
+        if (!viewer) return;
+
+        const loader = document.getElementById('modelShowcaseLoader');
+        const loaderText = document.getElementById('modelShowcaseLoaderText');
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        const radiansToDegrees = 180 / Math.PI;
+        const degreesToRadians = Math.PI / 180;
+
+        let modelLoaded = false;
+        let inView = false;
+        let interacting = false;
+        let resumeAt = 0;
+        let baseTheta = 0;
+        let swingSide = 1;
+        let swingTimer = null;
+
+        const captureUserOrbit = () => {
+          if (!viewer.getCameraOrbit) return;
+          const orbit = viewer.getCameraOrbit();
+          baseTheta = orbit.theta;
+        };
+
+        const setLoaderProgress = (progress) => {
+          if (!loader || !loaderText) return;
+          const pct = Math.max(0, Math.min(100, Math.round(progress * 100)));
+          loaderText.textContent = pct > 0 ? `3D model hazırlanıyor · %${pct}` : '3D model hazırlanıyor';
+        };
+
+        viewer.addEventListener('progress', (event) => {
+          setLoaderProgress(event.detail?.totalProgress || 0);
+        });
+
+        viewer.addEventListener('load', () => {
+          modelLoaded = true;
+          captureUserOrbit();
+          if (loader) loader.classList.add('is-hidden');
+        });
+
+        viewer.addEventListener('error', () => {
+          if (!loader || !loaderText) return;
+          loader.classList.add('is-error');
+          loaderText.textContent = '3D model yüklenemedi';
+        });
+
+        viewer.addEventListener('camera-change', (event) => {
+          if (event.detail?.source !== 'user-interaction') return;
+          captureUserOrbit();
+          resumeAt = Date.now() + 2600;
+        });
+
+        const interactionStart = () => {
+          interacting = true;
+          captureUserOrbit();
+        };
+
+        const interactionEnd = () => {
+          if (!interacting) return;
+          interacting = false;
+          captureUserOrbit();
+          resumeAt = Date.now() + 2400;
+        };
+
+        viewer.addEventListener('pointerdown', interactionStart);
+        window.addEventListener('pointerup', interactionEnd, { passive: true });
+        window.addEventListener('pointercancel', interactionEnd, { passive: true });
+
+        const swing = () => {
+          if (!modelLoaded || !inView || interacting || reducedMotion.matches || document.hidden || Date.now() < resumeAt) return;
+          if (!viewer.getCameraOrbit) return;
+
+          const orbit = viewer.getCameraOrbit();
+          const amplitude = 10 * degreesToRadians;
+          const targetTheta = baseTheta + amplitude * swingSide;
+          swingSide *= -1;
+          viewer.cameraOrbit = `${targetTheta * radiansToDegrees}deg ${orbit.phi * radiansToDegrees}deg ${orbit.radius}m`;
+        };
+
+        const startSwing = () => {
+          if (swingTimer) return;
+          swingTimer = window.setInterval(swing, 2550);
+          window.setTimeout(swing, 700);
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+          inView = entries[0]?.isIntersecting || false;
+          if (inView) {
+            if (!viewer.getAttribute('src') && viewer.dataset.src) {
+              viewer.setAttribute('src', viewer.dataset.src);
+            }
+            startSwing();
+          }
+        }, { rootMargin: '700px 0px', threshold: 0.01 });
+        observer.observe(viewer);
+
+        reducedMotion.addEventListener?.('change', () => {
+          if (!reducedMotion.matches) {
+            captureUserOrbit();
+            resumeAt = Date.now() + 800;
+          }
+        });
+      })();
+    </script>
   </body>
 </html>
