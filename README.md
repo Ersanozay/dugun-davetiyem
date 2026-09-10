@@ -1,2 +1,0 @@
-# dugun-davetiyem
-Düğün Davetiyesi

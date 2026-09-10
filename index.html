@@ -1,48 +1,66 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="tr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="color-scheme" content="light only">
-<meta name="theme-color" content="#F3ECDE">
-<title>Sabriye &amp; Ersan | Düğün Davetiyesi</title>
-<meta name="description" content="Sabriye ve Ersan'ın düğün davetiyesi ve birlikte yazdıkları hikâye.">
-<meta property="og:type" content="website">
-<meta property="og:locale" content="tr_TR">
-<meta property="og:site_name" content="Sabriye &amp; Ersan">
-<meta property="og:title" content="Sabriye &amp; Ersan | Düğün Davetiyesi">
-<meta property="og:description" content="Düğünümüze davetlisiniz. 10 Ekim 2026">
-<meta property="og:url" content="https://sabriyeveersan.com/">
-<meta property="og:image" content="https://sabriyeveersan.com/og.jpg">
-<meta property="og:image:secure_url" content="https://sabriyeveersan.com/og.jpg">
-<meta property="og:image:type" content="image/jpeg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Sabriye ve Ersan düğün davetiyesi">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Sabriye &amp; Ersan | Düğün Davetiyesi">
-<meta name="twitter:description" content="Düğünümüze davetlisiniz. 10 Ekim 2026">
-<meta name="twitter:image" content="https://sabriyeveersan.com/og.jpg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&amp;family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&amp;display=swap" rel="stylesheet">
-  <script type="module" crossorigin src="/assets/index-HqZCAO5t.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-Cia8Rfa1.css">
-</head>
-<body>
-
-<!-- ======================================================
-     CONFIG: sadece script.js dosyasının en üstündeki CONFIG
-     nesnesini (script.js) ve videoyu ("intro-video.mp4") değiştirerek
-     tüm davetiyeyi kendine uyarlayabilirsin.
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light only" />
+    <meta name="theme-color" content="#F3ECDE" />
+    <title>Sabriye &amp; Ersan | Düğün Davetiyesi</title>
+    <meta
+      name="description"
+      content="Sabriye ve Ersan'ın düğün davetiyesi ve birlikte yazdıkları hikâye."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="tr_TR" />
+    <meta property="og:site_name" content="Sabriye &amp; Ersan" />
+    <meta
+      property="og:title"
+      content="Sabriye &amp; Ersan | Düğün Davetiyesi"
+    />
+    <meta
+      property="og:description"
+      content="Düğünümüze davetlisiniz. 10 Ekim 2026"
+    />
+    <meta property="og:url" content="https://sabriyeveersan.com/" />
+    <meta property="og:image" content="https://sabriyeveersan.com/og.jpg" />
+    <meta
+      property="og:image:secure_url"
+      content="https://sabriyeveersan.com/og.jpg"
+    />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Sabriye ve Ersan düğün davetiyesi" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Sabriye &amp; Ersan | Düğün Davetiyesi"
+    />
+    <meta
+      name="twitter:description"
+      content="Düğünümüze davetlisiniz. 10 Ekim 2026"
+    />
+    <meta name="twitter:image" content="https://sabriyeveersan.com/og.jpg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&amp;family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script type="module" crossorigin src="/assets/index-DDVZIcAT.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-C8hHWclC.css">
+  </head>
+  <body>
+    <!-- ======================================================
+     Metinler, tarihler ve form alanları config.js içinde yönetilir.
+     Orijinal video açılışı hero-video.js içinde ayrı tutulur.
      ====================================================== -->
 
-<!-- HERO — dokunarak aç: geçiş bir kez oynar, sonra yürüyüş sahnesi
-     sonsuz döngüde kalır. Metinler tam yürüyüş başlarken belirir. -->
-<section class="hero">
-  <video class="hero__video" id="introClip" src="/assets/intro-clip-Dfk7W8tw.mp4" poster="/assets/hero-poster-CnNW8O-U.jpg" muted playsinline preload="auto"></video>
-  <video class="hero__video hero__video--loop" id="loopClip" src="/assets/loop-clip-l4GtHFXL.mp4" muted loop playsinline preload="none"></video>
-  <audio id="bgMusic" src="/assets/song-CEqV9Y6v.mp3" loop preload="none"></audio>
+    <!-- HERO — orijinal zarf videosu dokununca oynar; ardından yürüyüş döngüsü başlar. -->
+    <section class="hero">
+  <video class="hero__video" id="introClip" src="/assets/intro-clip-Dfk7W8tw-Dfk7W8tw.mp4" poster="/assets/hero-poster-CnNW8O-U-CnNW8O-U.jpg" muted playsinline preload="auto"></video>
+  <video class="hero__video hero__video--loop" id="loopClip" src="/assets/loop-clip-l4GtHFXL-l4GtHFXL.mp4" muted loop playsinline preload="none"></video>
+  <audio id="bgMusic" src="/assets/song-CEqV9Y6v-CEqV9Y6v.mp3" loop preload="none"></audio>
   <div class="hero__scrim"></div>
 
   <button type="button" class="hero__sound" id="soundBtn" aria-pressed="true" aria-label="Sesi kapat" hidden>🔊</button>
@@ -81,221 +99,452 @@
   </button>
 </section>
 
-<div class="scallop" style="--target:var(--sand)"></div>
+    <div class="scallop" style="--target: var(--sand)"></div>
 
-<!-- COUNTDOWN -->
-<section class="countdown" id="geri-sayim">
-  <img class="countdown__deco countdown__deco--left reveal" src="/assets/en-ozel-gun-sol-yeni-bVT6T9BC.webp" alt="" aria-hidden="true" loading="lazy" decoding="async" width="592" height="1810">
-  <img class="countdown__deco countdown__deco--right reveal" src="/assets/en-ozel-gun-sag-yeni-rPP1FOwW.webp" alt="" aria-hidden="true" loading="lazy" decoding="async" width="592" height="1810">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <p class="eyebrow">Geri Sayım</p>
-      <h2>En Özel Günümüze Doğru</h2>
-    </div>
-    <div class="countdown__grid reveal" aria-live="polite">
-      <div class="countdown__item arch-tile"><span class="countdown__value" id="cd-d">--</span><span class="countdown__label">Gün</span></div>
-      <div class="countdown__item arch-tile"><span class="countdown__value" id="cd-h">--</span><span class="countdown__label">Saat</span></div>
-      <div class="countdown__item arch-tile"><span class="countdown__value" id="cd-m">--</span><span class="countdown__label">Dakika</span></div>
-      <div class="countdown__item arch-tile"><span class="countdown__value" id="cd-s">--</span><span class="countdown__label">Saniye</span></div>
-    </div>
-    <p class="countdown__note reveal" data-cfg="countdownNote"></p>
-  </div>
-</section>
-
-<div class="scallop" style="--target:var(--ivory);transform:rotate(180deg)"></div>
-
-<!-- NOT + FOTOĞRAF -->
-<section class="note">
-  <div class="marquee">
-    <div class="marquee__track" id="marqueeTrack"></div>
-  </div>
-  <div class="photo-divider reveal" aria-hidden="true">
-    <img class="photo-divider__image" src="/assets/photo-divider-floral-DwgT8CZ7.webp" alt="" loading="lazy" width="2048" height="682">
-  </div>
-  <div class="wrap">
-    <p class="note__text" data-cfg="note"></p>
-  </div>
-</section>
-
-<div class="scallop" style="--target:var(--sand)"></div>
-
-<!-- DETAYLAR -->
-<section class="details">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <p class="eyebrow">Detaylar</p>
-      <h2>Bilmeniz gereken her şey</h2>
-    </div>
-    <div class="details__grid">
-      <article class="detail-card reveal" style="--reveal-delay:.08s">
-        <div class="detail-card__media">
-          <img src="/assets/kina-salonu-DqAih8zx.webp" alt="Kına salonunun suluboya bina çizimi" loading="lazy">
-          <p class="detail-card__tag" data-cfg="ceremony.label"></p>
+    <nav class="invitation-nav" aria-label="Davetiye bölümleri">
+      <a href="#detaylar">Yer &amp; tarih</a>
+      <a href="#akis">Günün akışı</a>
+      <a href="#hikayemiz">Hikâyemiz</a>
+      <a href="#katilim">Katılım</a>
+    </nav>
+    <!-- COUNTDOWN -->
+    <section class="countdown" id="geri-sayim" tabindex="-1">
+      <img
+        class="countdown__deco countdown__deco--left reveal"
+        src="/assets/en-ozel-gun-sol-yeni-bVT6T9BC-bVT6T9BC.webp"
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+        decoding="async"
+        width="592"
+        height="1810"
+      />
+      <img
+        class="countdown__deco countdown__deco--right reveal"
+        src="/assets/en-ozel-gun-sag-yeni-rPP1FOwW-rPP1FOwW.webp"
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+        decoding="async"
+        width="592"
+        height="1810"
+      />
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">Geri Sayım</p>
+          <h2>En Özel Günümüze Doğru</h2>
         </div>
-        <div class="detail-card__body">
-          <h3 data-cfg="ceremony.venue"></h3>
-          <span class="detail-card__time" data-cfg="ceremony.time"></span>
-          <p class="detail-card__addr" data-cfg="ceremony.address"></p>
-          <a class="detail-card__link" data-cfg-href="ceremony.mapUrl" href="#" target="_blank" rel="noopener noreferrer">Yol Tarifi Al</a>
+        <div
+          class="countdown__grid reveal"
+          role="timer"
+          aria-live="off"
+          aria-label="Düğüne kalan süre"
+        >
+          <div class="countdown__item arch-tile">
+            <span class="countdown__value" id="cd-d">--</span
+            ><span class="countdown__label">Gün</span>
+          </div>
+          <div class="countdown__item arch-tile">
+            <span class="countdown__value" id="cd-h">--</span
+            ><span class="countdown__label">Saat</span>
+          </div>
+          <div class="countdown__item arch-tile">
+            <span class="countdown__value" id="cd-m">--</span
+            ><span class="countdown__label">Dakika</span>
+          </div>
+          <div class="countdown__item arch-tile">
+            <span class="countdown__value" id="cd-s">--</span
+            ><span class="countdown__label">Saniye</span>
+          </div>
         </div>
-      </article>
-      <article class="detail-card reveal" style="--reveal-delay:.2s">
-        <div class="detail-card__media">
-          <img src="/assets/dugun-salonu-BLASQAnd.webp" alt="Düğün salonunun suluboya bina çizimi" loading="lazy">
-          <p class="detail-card__tag" data-cfg="wedding.label"></p>
+        <p class="countdown__note reveal" data-cfg="countdownNote"></p>
+      </div>
+    </section>
+
+    <div
+      class="scallop"
+      style="--target: var(--ivory); transform: rotate(180deg)"
+    ></div>
+
+    <!-- NOT + FOTOĞRAF -->
+    <section class="note">
+      <div class="marquee">
+        <div class="marquee__track" id="marqueeTrack"></div>
+      </div>
+      <div class="gallery-controls">
+        <button
+          class="gallery-toggle"
+          type="button"
+          id="galleryToggle"
+          aria-controls="marqueeTrack"
+          aria-pressed="false"
+        >
+          Fotoğrafları durdur ve incele
+        </button>
+      </div>
+      <div class="photo-divider reveal" aria-hidden="true">
+        <img
+          class="photo-divider__image"
+          src="/assets/photo-divider-floral-DwgT8CZ7-DwgT8CZ7.webp"
+          alt=""
+          loading="lazy"
+          width="2048"
+          height="682"
+        />
+      </div>
+      <div class="wrap">
+        <p class="note__text" data-cfg="note"></p>
+      </div>
+    </section>
+
+    <div class="scallop" style="--target: var(--sand)"></div>
+
+    <!-- DETAYLAR -->
+    <section class="details" id="detaylar">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">Detaylar</p>
+          <h2>Bilmeniz gereken her şey</h2>
         </div>
-        <div class="detail-card__body">
-          <h3 data-cfg="wedding.venue"></h3>
-          <span class="detail-card__time" data-cfg="wedding.time"></span>
-          <p class="detail-card__addr" data-cfg="wedding.address"></p>
-          <a class="detail-card__link" data-cfg-href="wedding.mapUrl" href="#" target="_blank" rel="noopener noreferrer">Yol Tarifi Al</a>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- GÖRSEL GEÇİŞ / FULL-WIDTH IMAGE BREAK -->
-<section class="visual-divider" aria-label="Dekoratif görsel geçiş">
-  <div class="visual-divider__art reveal">
-    <img class="visual-divider__image visual-divider__image--faded" src="/assets/fountain-divider-faded-DgtSpI2e.webp" alt="" aria-hidden="true" loading="lazy" width="1254" height="1254">
-    <img class="visual-divider__image visual-divider__image--base" src="/assets/fountain-divider-warm-DwHwBNvF.webp" alt="Çiçeklerle çevrili dekoratif fıskiye illüstrasyonu" loading="lazy" width="1254" height="1254">
-  </div>
-</section>
-
-<!-- TIMELINE -->
-<section class="timeline">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <p class="eyebrow">Akış</p>
-      <h2>Düğün Gününün Akışı</h2>
-    </div>
-    <div id="timelineWrap"></div>
-  </div>
-</section>
-
-<div class="scallop" style="--target:var(--ivory);transform:rotate(180deg)"></div>
-
-<!-- HİKÂYEMİZ — davetiyenin ardından dokunarak açılır. -->
-<section class="story-disclosure" id="hikayemiz" aria-labelledby="story-title">
-  <details class="story-disclosure__details" id="storyDisclosure">
-    <summary class="story-disclosure__summary">
-      <span class="story-disclosure__mark" aria-hidden="true">♡</span>
-      <span class="eyebrow">Hikâyemiz</span>
-      <span class="story-disclosure__title" id="story-title" role="heading" aria-level="2">
-        <span>Birlikte yazdığımız</span>
-        <span>beş güzel an</span>
-      </span>
-      <p>Tanışmamızdan bugüne uzanan küçük bir yolculuk.</p>
-      <span class="story-disclosure__cue">
-        <i aria-hidden="true"></i>
-        <em><span class="story-disclosure__closed-label">Hikâyeyi açmak için dokunun</span><span class="story-disclosure__open-label">Hikâyeyi kapat</span></em>
-        <i aria-hidden="true"></i>
-      </span>
-      <span class="story-disclosure__arrow" aria-hidden="true">⌄</span>
-    </summary>
-
-    <div class="story-disclosure__panel">
-      <div class="story-disclosure__panel-inner">
-        <p class="story-disclosure__hint">Aşağı kaydırdıkça anılarımız canlanır.</p>
-        <p class="story-disclosure__loading" id="storyLoadingStatus" role="status" aria-live="polite" hidden>Hikâye hazırlanıyor…</p>
-        <div class="story">
-          <div id="storyScenes" class="story__scenes"></div>
-
-          <noscript>
-            <div class="story-fallback wrap">
-              <article><p>01 · Kütüphanede tanışma</p><h3>Hikâyemiz sessizce bir kütüphanede başladı.</h3></article>
-              <article><p>02 · İlk buluşma</p><h3>Kartlar açıldıkça, biz de birbirimize açıldık.</h3></article>
-              <article><p>03 · Mezuniyet</p><h3>Zaman geçti, birlikte büyüdük; hayallerimiz aynı gelecekte buluştu.</h3></article>
-              <article><p>04 · Evlilik teklifi</p><h3>Bir akşam, hayatımızın en güzel sorusuna dönüştü.</h3></article>
-              <article><p>05 · Düğün</p><h3>Şimdi hikâyemizin en güzel bölümünü sizinle kutluyoruz.</h3></article>
+        <div class="details__grid">
+          <article class="detail-card reveal" style="--reveal-delay: 0.08s">
+            <div class="detail-card__media">
+              <img
+                src="/assets/kina-salonu-DqAih8zx-DqAih8zx.webp"
+                alt="Kına salonunun suluboya bina çizimi"
+                loading="lazy"
+              />
+              <p class="detail-card__tag" data-cfg="ceremony.label"></p>
             </div>
-          </noscript>
-          <div id="story-end" class="story__end" tabindex="-1"></div>
+            <div class="detail-card__body">
+              <h3 data-cfg="ceremony.venue"></h3>
+              <span class="detail-card__time" data-cfg="ceremony.time"></span>
+              <p class="detail-card__addr" data-cfg="ceremony.address"></p>
+              <a
+                class="detail-card__link"
+                data-cfg-href="ceremony.mapUrl"
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Yol Tarifi Al</a
+              >
+            </div>
+          </article>
+          <article class="detail-card reveal" style="--reveal-delay: 0.2s">
+            <div class="detail-card__media">
+              <img
+                src="/assets/dugun-salonu-BLASQAnd-BLASQAnd.webp"
+                alt="Düğün salonunun suluboya bina çizimi"
+                loading="lazy"
+              />
+              <p class="detail-card__tag" data-cfg="wedding.label"></p>
+            </div>
+            <div class="detail-card__body">
+              <h3 data-cfg="wedding.venue"></h3>
+              <span class="detail-card__time" data-cfg="wedding.time"></span>
+              <p class="detail-card__addr" data-cfg="wedding.address"></p>
+              <a
+                class="detail-card__link"
+                data-cfg-href="wedding.mapUrl"
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Yol Tarifi Al</a
+              >
+            </div>
+          </article>
         </div>
       </div>
-    </div>
-  </details>
-</section>
+    </section>
 
-<!-- KATILIM BİLDİRİMİ / RSVP -->
-<section class="rsvp" id="katilim">
-  <div class="wrap rsvp__wrap">
-    <div class="section-head reveal">
-      <p class="eyebrow">Katılım Bildirimi</p>
-      <h2>Bu özel günümüzde yanımızda olacak mısınız?</h2>
-      <p>Katılım durumunuzu paylaşmanız, hazırlıklarımızı planlamamıza yardımcı olacaktır.</p>
-    </div>
-
-    <form class="rsvp__card reveal" id="rsvpForm">
-      <div class="rsvp__field">
-        <label class="rsvp__label" for="rsvpName">Ad Soyad</label>
-        <input class="rsvp__control" id="rsvpName" name="fullName" type="text" autocomplete="name" placeholder="Adınızı ve soyadınızı yazınız" required>
+    <!-- GÖRSEL GEÇİŞ / FULL-WIDTH IMAGE BREAK -->
+    <section class="visual-divider" aria-label="Dekoratif görsel geçiş">
+      <div class="visual-divider__art reveal">
+        <img
+          class="visual-divider__image visual-divider__image--faded"
+          src="/assets/fountain-divider-faded-DgtSpI2e-DgtSpI2e.webp"
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          width="1254"
+          height="1254"
+        />
+        <img
+          class="visual-divider__image visual-divider__image--base"
+          src="/assets/fountain-divider-warm-DwHwBNvF-DwHwBNvF.webp"
+          alt="Çiçeklerle çevrili dekoratif fıskiye illüstrasyonu"
+          loading="lazy"
+          width="1254"
+          height="1254"
+        />
       </div>
+    </section>
 
-      <fieldset class="rsvp__field">
-        <legend class="rsvp__label">Katılım durumunuz</legend>
-        <div class="rsvp__choices rsvp__choices--two">
-          <label class="rsvp__choice">
-            <input type="radio" name="attendance" value="Katılacağım" checked>
-            <span class="rsvp__choice-text">Memnuniyetle katılacağım</span>
-          </label>
-          <label class="rsvp__choice">
-            <input type="radio" name="attendance" value="Katılamayacağım">
-            <span class="rsvp__choice-text">Ne yazık ki katılamayacağım</span>
-          </label>
+    <!-- TIMELINE -->
+    <section class="timeline" id="akis">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">Akış</p>
+          <h2>Düğün Gününün Akışı</h2>
         </div>
-      </fieldset>
+        <div id="timelineWrap"></div>
+      </div>
+    </section>
 
-      <div class="rsvp__attending-fields" id="rsvpAttendingFields">
-        <fieldset class="rsvp__field">
-          <legend class="rsvp__label">Hangi etkinlikte bizimle olacaksınız?</legend>
-          <div class="rsvp__choices rsvp__choices--events">
-            <label class="rsvp__choice">
-              <input type="radio" name="event" value="Kına gecesi">
-              <span class="rsvp__choice-text">Kına gecesi</span>
-            </label>
-            <label class="rsvp__choice">
-              <input type="radio" name="event" value="Düğün daveti">
-              <span class="rsvp__choice-text">Düğün daveti</span>
-            </label>
-            <label class="rsvp__choice">
-              <input type="radio" name="event" value="Her iki etkinlik" checked>
-              <span class="rsvp__choice-text">Her ikisi</span>
-            </label>
+    <div
+      class="scallop"
+      style="--target: var(--ivory); transform: rotate(180deg)"
+    ></div>
+
+    <!-- HİKÂYEMİZ — davetiyenin ardından dokunarak açılır. -->
+    <section
+      class="story-disclosure"
+      id="hikayemiz"
+      aria-labelledby="story-title"
+    >
+      <details class="story-disclosure__details" id="storyDisclosure">
+        <summary class="story-disclosure__summary">
+          <span class="story-disclosure__mark" aria-hidden="true">♡</span>
+          <span class="eyebrow">Hikâyemiz</span>
+          <span
+            class="story-disclosure__title"
+            id="story-title"
+            role="heading"
+            aria-level="2"
+          >
+            <span>Birlikte yazdığımız</span>
+            <span>beş güzel an</span>
+          </span>
+          <p>Tanışmamızdan bugüne uzanan küçük bir yolculuk.</p>
+          <span class="story-disclosure__cue">
+            <i aria-hidden="true"></i>
+            <em
+              ><span class="story-disclosure__closed-label"
+                >Hikâyeyi açmak için dokunun</span
+              ><span class="story-disclosure__open-label"
+                >Hikâyeyi kapat</span
+              ></em
+            >
+            <i aria-hidden="true"></i>
+          </span>
+          <span class="story-disclosure__arrow" aria-hidden="true">⌄</span>
+        </summary>
+
+        <div class="story-disclosure__panel">
+          <div class="story-disclosure__panel-inner">
+            <p class="story-disclosure__hint">
+              Aşağı kaydırdıkça anılarımız canlanır.
+            </p>
+            <p
+              class="story-disclosure__loading"
+              id="storyLoadingStatus"
+              role="status"
+              aria-live="polite"
+              hidden
+            >
+              Hikâye hazırlanıyor…
+            </p>
+            <div class="story">
+              <div id="storyScenes" class="story__scenes"></div>
+
+              <noscript>
+                <div class="story-fallback wrap">
+                  <article>
+                    <p>01 · Kütüphanede tanışma</p>
+                    <h3>Hikâyemiz sessizce bir kütüphanede başladı.</h3>
+                  </article>
+                  <article>
+                    <p>02 · İlk buluşma</p>
+                    <h3>Kartlar açıldıkça, biz de birbirimize açıldık.</h3>
+                  </article>
+                  <article>
+                    <p>03 · Mezuniyet</p>
+                    <h3>
+                      Zaman geçti, birlikte büyüdük; hayallerimiz aynı gelecekte
+                      buluştu.
+                    </h3>
+                  </article>
+                  <article>
+                    <p>04 · Evlilik teklifi</p>
+                    <h3>Bir akşam, hayatımızın en güzel sorusuna dönüştü.</h3>
+                  </article>
+                  <article>
+                    <p>05 · Düğün</p>
+                    <h3>
+                      Şimdi hikâyemizin en güzel bölümünü sizinle kutluyoruz.
+                    </h3>
+                  </article>
+                </div>
+              </noscript>
+              <div id="story-end" class="story__end" tabindex="-1"></div>
+            </div>
           </div>
-        </fieldset>
-
-        <div class="rsvp__field rsvp__guest-field">
-          <span class="rsvp__label" id="guestCountLabel">Toplam kişi sayısı</span>
-          <div class="rsvp__stepper" role="group" aria-labelledby="guestCountLabel">
-            <button type="button" class="rsvp__stepper-button" data-step="-1" aria-label="Kişi sayısını azalt">−</button>
-            <input id="guestCount" name="guestCount" type="number" value="1" min="1" max="10" readonly aria-live="polite">
-            <button type="button" class="rsvp__stepper-button" data-step="1" aria-label="Kişi sayısını artır">+</button>
-          </div>
         </div>
+      </details>
+    </section>
+
+    <!-- KATILIM BİLDİRİMİ / RSVP -->
+    <section class="rsvp" id="katilim">
+      <div class="wrap rsvp__wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">Katılım Bildirimi</p>
+          <h2>Bu özel günümüzde yanımızda olacak mısınız?</h2>
+          <p>
+            Katılım durumunuzu paylaşmanız, hazırlıklarımızı planlamamıza
+            yardımcı olacaktır.
+          </p>
+        </div>
+
+        <form class="rsvp__card reveal" id="rsvpForm">
+          <div class="rsvp__field">
+            <label class="rsvp__label" for="rsvpName">Ad Soyad</label>
+            <input
+              class="rsvp__control"
+              id="rsvpName"
+              name="fullName"
+              type="text"
+              autocomplete="name"
+              placeholder="Adınızı ve soyadınızı yazınız"
+              required
+            />
+          </div>
+
+          <fieldset class="rsvp__field">
+            <legend class="rsvp__label">Katılım durumunuz</legend>
+            <div class="rsvp__choices rsvp__choices--two">
+              <label class="rsvp__choice">
+                <input
+                  type="radio"
+                  name="attendance"
+                  value="Katılacağım"
+                  checked
+                />
+                <span class="rsvp__choice-text">Memnuniyetle katılacağım</span>
+              </label>
+              <label class="rsvp__choice">
+                <input type="radio" name="attendance" value="Katılamayacağım" />
+                <span class="rsvp__choice-text"
+                  >Ne yazık ki katılamayacağım</span
+                >
+              </label>
+            </div>
+          </fieldset>
+
+          <div class="rsvp__attending-fields" id="rsvpAttendingFields">
+            <fieldset class="rsvp__field">
+              <legend class="rsvp__label">
+                Hangi etkinlikte bizimle olacaksınız?
+              </legend>
+              <div class="rsvp__choices rsvp__choices--events">
+                <label class="rsvp__choice">
+                  <input type="radio" name="event" value="Kına gecesi" />
+                  <span class="rsvp__choice-text">Kına gecesi</span>
+                </label>
+                <label class="rsvp__choice">
+                  <input type="radio" name="event" value="Düğün daveti" />
+                  <span class="rsvp__choice-text">Düğün daveti</span>
+                </label>
+                <label class="rsvp__choice">
+                  <input
+                    type="radio"
+                    name="event"
+                    value="Her iki etkinlik"
+                    checked
+                  />
+                  <span class="rsvp__choice-text">Her ikisi</span>
+                </label>
+              </div>
+            </fieldset>
+
+            <div class="rsvp__field rsvp__guest-field">
+              <span class="rsvp__label" id="guestCountLabel"
+                >Toplam kişi sayısı</span
+              >
+              <div
+                class="rsvp__stepper"
+                role="group"
+                aria-labelledby="guestCountLabel"
+              >
+                <button
+                  type="button"
+                  class="rsvp__stepper-button"
+                  data-step="-1"
+                  aria-label="Kişi sayısını azalt"
+                >
+                  −
+                </button>
+                <input
+                  id="guestCount"
+                  name="guestCount"
+                  type="number"
+                  value="1"
+                  min="1"
+                  max="10"
+                  readonly
+                  aria-live="polite"
+                />
+                <button
+                  type="button"
+                  class="rsvp__stepper-button"
+                  data-step="1"
+                  aria-label="Kişi sayısını artır"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="rsvp__field">
+            <label class="rsvp__label" for="rsvpNote"
+              >Notunuz <span>(isteğe bağlı)</span></label
+            >
+            <textarea
+              class="rsvp__control rsvp__textarea"
+              id="rsvpNote"
+              name="note"
+              rows="4"
+              placeholder="Bizimle paylaşmak istediğiniz bir not varsa yazabilirsiniz."
+            ></textarea>
+          </div>
+
+          <button class="rsvp__submit" type="submit">
+            <span>Katılımımı Bildir</span>
+            <span aria-hidden="true">✓</span>
+          </button>
+          <p class="rsvp__helper">
+            Kişi sayısına kendinizi de dâhil edin. Yanıtınız yalnızca katılım
+            planlaması için kullanılacaktır.
+          </p>
+          <p
+            class="rsvp__status"
+            id="rsvpStatus"
+            role="status"
+            aria-live="polite"
+          ></p>
+          <a
+            class="rsvp__fallback"
+            id="rsvpFallback"
+            target="_blank"
+            rel="noopener noreferrer"
+            hidden
+            >Katılım formunu ayrı sayfada aç ↗</a
+          >
+        </form>
       </div>
+    </section>
 
-      <div class="rsvp__field">
-        <label class="rsvp__label" for="rsvpNote">Notunuz <span>(isteğe bağlı)</span></label>
-        <textarea class="rsvp__control rsvp__textarea" id="rsvpNote" name="note" rows="4" placeholder="Bizimle paylaşmak istediğiniz bir not varsa yazabilirsiniz."></textarea>
-      </div>
-
-      <button class="rsvp__submit" type="submit">
-        <span>Katılımımı Bildir</span>
-        <span aria-hidden="true">✓</span>
-      </button>
-      <p class="rsvp__helper">Yanıtınız yalnızca katılım planlaması için kaydedilecektir.</p>
-      <p class="rsvp__status" id="rsvpStatus" role="status" aria-live="polite"></p>
-    </form>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <p class="foot-names reveal"><span data-cfg="partner1"></span><span class="amp">&amp;</span><span data-cfg="partner2"></span></p>
-  <p class="foot-line reveal" style="--reveal-delay:.18s" data-cfg="dateShort"></p>
-</footer>
-
-</body>
+    <!-- FOOTER -->
+    <footer>
+      <p class="foot-names reveal">
+        <span data-cfg="partner1"></span><span class="amp">&amp;</span
+        ><span data-cfg="partner2"></span>
+      </p>
+      <p
+        class="foot-line reveal"
+        style="--reveal-delay: 0.18s"
+        data-cfg="dateShort"
+      ></p>
+    </footer>
+  </body>
 </html>
