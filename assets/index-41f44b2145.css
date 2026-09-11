@@ -58,16 +58,6 @@ footer .foot-line{margin:.35rem 0 0}
 }
 
 
-/* Invitation gate: prevent scrolling until the envelope is opened. */
-html.invite-locked,
-html.invite-locked body,
-body.invite-locked {
-  height: 100%;
-  overflow: hidden !important;
-  overscroll-behavior: none;
-}
-body.invite-locked { touch-action: none; }
-
 /* Keyboard-only shortcut; invisible until focused. */
 .skip-link {
   position: fixed;
@@ -184,7 +174,6 @@ body.invite-locked { touch-action: none; }
   .rsvp__card,
   .rsvp__confirmation { transition: none; }
 }
-html.invite-locked .skip-link{display:none}
 
 /* Ultra-narrow mobile navigation safeguard — only <=360px; existing 393px iPhone layout is untouched */
 @media (max-width:360px){

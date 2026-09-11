@@ -8,9 +8,6 @@
     <meta name="robots" content="noindex, follow, noarchive" />
     <link rel="canonical" href="https://sabriyeveersan.com/" />
     <title>Sabriye &amp; Ersan | Düğün Davetiyesi</title>
-    <script>
-      document.documentElement.classList.add('invite-locked');
-    </script>
     <meta
       name="description"
       content="Sabriye ve Ersan'ın düğün davetiyesi ve birlikte yazdıkları hikâye."
@@ -59,7 +56,7 @@
     <script type="module" crossorigin src="/assets/index-DbX1w8Fu.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-41f44b2145.css">
   </head>
-  <body class="invite-locked">
+  <body>
     <a class="skip-link" href="#main-content">Ana içeriğe geç</a>
     <!-- ======================================================
      Metinler, tarihler ve form alanları config.js içinde yönetilir.
@@ -699,41 +696,6 @@
 
     <script>
       (() => {
-        // The invitation behaves like a real envelope: it must be opened once,
-        // but the visitor can scroll immediately after the tap without waiting
-        // for the intro video to finish.
-        let invitationLocked = true;
-        const blockedKeys = new Set(['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End', ' ']);
-
-        const unlockInvitation = () => {
-          if (!invitationLocked) return;
-          invitationLocked = false;
-          document.documentElement.classList.remove('invite-locked');
-          document.body?.classList.remove('invite-locked');
-        };
-
-        const blockScroll = (event) => {
-          if (!invitationLocked) return;
-          event.preventDefault();
-        };
-
-        const blockScrollKeys = (event) => {
-          if (!invitationLocked || !blockedKeys.has(event.key)) return;
-          const target = event.target;
-          if (target instanceof HTMLElement && /^(INPUT|TEXTAREA|SELECT|BUTTON)$/.test(target.tagName)) return;
-          event.preventDefault();
-        };
-
-        document.addEventListener('wheel', blockScroll, { passive: false });
-        document.addEventListener('touchmove', blockScroll, { passive: false });
-        document.addEventListener('keydown', blockScrollKeys, { passive: false });
-        document.addEventListener('pointerdown', (event) => {
-          if (event.target instanceof Element && event.target.closest('#gateBtn')) unlockInvitation();
-        }, true);
-        document.addEventListener('click', (event) => {
-          if (event.target instanceof Element && event.target.closest('#gateBtn')) unlockInvitation();
-        }, true);
-
         const form = document.getElementById('rsvpForm');
         const status = document.getElementById('rsvpStatus');
         const fallback = document.getElementById('rsvpFallback');
