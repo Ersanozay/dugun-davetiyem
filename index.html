@@ -5,7 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="color-scheme" content="light only" />
     <meta name="theme-color" content="#F3ECDE" />
+    <meta name="robots" content="noindex, follow, noarchive" />
+    <link rel="canonical" href="https://sabriyeveersan.com/" />
     <title>Sabriye &amp; Ersan | Düğün Davetiyesi</title>
+    <script>
+      document.documentElement.classList.add('invite-locked');
+    </script>
     <meta
       name="description"
       content="Sabriye ve Ersan'ın düğün davetiyesi ve birlikte yazdıkları hikâye."
@@ -41,6 +46,8 @@
       content="Düğünümüze davetlisiniz. 10 Ekim 2026"
     />
     <meta name="twitter:image" content="https://sabriyeveersan.com/og.jpg" />
+    <link rel="preload" as="image" href="/assets/hero-poster-CnNW8O-U-CnNW8O-U.jpg" fetchpriority="high" />
+    <link rel="preconnect" href="https://ajax.googleapis.com" crossorigin />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -49,11 +56,11 @@
     />
 
 
-    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.3.1/model-viewer.min.js"></script>
     <script type="module" crossorigin src="/assets/index-DbX1w8Fu.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-41f44b2145.css">
   </head>
-  <body>
+  <body class="invite-locked">
+    <a class="skip-link" href="#main-content">Ana içeriğe geç</a>
     <!-- ======================================================
      Metinler, tarihler ve form alanları config.js içinde yönetilir.
      Orijinal video açılışı hero-video.js içinde ayrı tutulur.
@@ -110,6 +117,7 @@
       <a href="#hikayemiz">Hikâyemiz<svg class="nav-brush" viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path pathLength="1" d="M 4 32 C 9 8 23 7 38 23 S 63 40 78 21 S 93 8 99 8" /></svg></a>
       <a href="#katilim">Katılım<svg class="nav-brush" viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path pathLength="1" d="M 4 32 C 9 8 23 7 38 23 S 63 40 78 21 S 93 8 99 8" /></svg></a>
     </nav>
+    <main id="main-content" tabindex="-1">
     <!-- COUNTDOWN -->
     <section class="countdown" id="geri-sayim" tabindex="-1">
       <img
@@ -531,6 +539,29 @@
             >Katılım formunu ayrı sayfada aç ↗</a
           >
         </form>
+        <div
+          class="rsvp__confirmation"
+          id="rsvpConfirmation"
+          role="status"
+          aria-live="polite"
+          tabindex="-1"
+          hidden
+        >
+          <span class="rsvp__confirmation-mark" aria-hidden="true">✓</span>
+          <p class="eyebrow">Katılım Bildirimi</p>
+          <h3>Yanıtınız için teşekkür ederiz.</h3>
+          <p class="rsvp__confirmation-copy" id="rsvpConfirmationCopy"></p>
+          <a
+            class="rsvp__confirmation-fallback"
+            id="rsvpConfirmationFallback"
+            target="_blank"
+            rel="noopener noreferrer"
+            hidden
+          >Katılım formunu ayrı sayfada aç ↗</a>
+          <button class="rsvp__confirmation-edit" id="rsvpConfirmationEdit" type="button">
+            Yanıtı düzenle
+          </button>
+        </div>
       </div>
     </section>
 
@@ -569,13 +600,24 @@
             environment-image="neutral"
           ></model-viewer>
 
-          <div class="model-showcase__loader" id="modelShowcaseLoader" role="status" aria-live="polite">
+          
+          <img
+            class="model-showcase__fallback"
+            id="modelShowcaseFallback"
+            data-src="/assets/wedding-couple-meet-v1-CpwMwjsq-CpwMwjsq.webp"
+            alt="Sabriye ve Ersan düğün illüstrasyonu"
+            decoding="async"
+          />
+
+<div class="model-showcase__loader" id="modelShowcaseLoader" role="status" aria-live="polite">
             <span class="model-showcase__loader-ring" aria-hidden="true"></span>
             <span id="modelShowcaseLoaderText">3D model hazırlanıyor</span>
           </div>
         </div>
       </div>
     </section>
+
+    </main>
 
     <!-- FOOTER -->
     <footer>
@@ -592,24 +634,244 @@
 
     <script>
       (() => {
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        const hero = document.querySelector('.hero');
+        const introVideo = document.getElementById('introClip');
+        const loopVideo = document.getElementById('loopClip');
+        const countdown = document.querySelector('.countdown');
+
+        let heroVisible = true;
+
+        const pauseVideoForMotion = (video) => {
+          if (!video || video.paused || video.ended) return;
+          video.dataset.motionPaused = 'true';
+          video.pause();
+        };
+
+        const resumeVideoForMotion = (video) => {
+          if (!video || video.dataset.motionPaused !== 'true' || document.hidden || !heroVisible) return;
+          delete video.dataset.motionPaused;
+          const playPromise = video.play();
+          playPromise?.catch?.(() => {
+            video.dataset.motionPaused = 'true';
+          });
+        };
+
+        const setHeroMotion = (visible) => {
+          heroVisible = visible;
+          hero?.classList.toggle('motion-paused', !visible);
+          if (!visible || document.hidden) {
+            pauseVideoForMotion(introVideo);
+            pauseVideoForMotion(loopVideo);
+          } else {
+            resumeVideoForMotion(introVideo);
+            resumeVideoForMotion(loopVideo);
+          }
+        };
+
+        if (hero) {
+          new IntersectionObserver((entries) => {
+            setHeroMotion(Boolean(entries[0]?.isIntersecting));
+          }, { threshold: 0.02 }).observe(hero);
+        }
+
+        if (countdown) {
+          new IntersectionObserver((entries) => {
+            countdown.classList.toggle('motion-paused', !entries[0]?.isIntersecting);
+          }, { rootMargin: '120px 0px', threshold: 0.01 }).observe(countdown);
+        }
+
+        const syncPageMotion = () => {
+          document.documentElement.classList.toggle('motion-page-hidden', document.hidden);
+          if (document.hidden) {
+            pauseVideoForMotion(introVideo);
+            pauseVideoForMotion(loopVideo);
+          } else if (heroVisible) {
+            resumeVideoForMotion(introVideo);
+            resumeVideoForMotion(loopVideo);
+          }
+        };
+
+        document.addEventListener('visibilitychange', syncPageMotion);
+        syncPageMotion();
+      })();
+    </script>
+
+    <script>
+      (() => {
+        // The invitation behaves like a real envelope: it must be opened once,
+        // but the visitor can scroll immediately after the tap without waiting
+        // for the intro video to finish.
+        let invitationLocked = true;
+        const blockedKeys = new Set(['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End', ' ']);
+
+        const unlockInvitation = () => {
+          if (!invitationLocked) return;
+          invitationLocked = false;
+          document.documentElement.classList.remove('invite-locked');
+          document.body?.classList.remove('invite-locked');
+        };
+
+        const blockScroll = (event) => {
+          if (!invitationLocked) return;
+          event.preventDefault();
+        };
+
+        const blockScrollKeys = (event) => {
+          if (!invitationLocked || !blockedKeys.has(event.key)) return;
+          const target = event.target;
+          if (target instanceof HTMLElement && /^(INPUT|TEXTAREA|SELECT|BUTTON)$/.test(target.tagName)) return;
+          event.preventDefault();
+        };
+
+        document.addEventListener('wheel', blockScroll, { passive: false });
+        document.addEventListener('touchmove', blockScroll, { passive: false });
+        document.addEventListener('keydown', blockScrollKeys, { passive: false });
+        document.addEventListener('pointerdown', (event) => {
+          if (event.target instanceof Element && event.target.closest('#gateBtn')) unlockInvitation();
+        }, true);
+        document.addEventListener('click', (event) => {
+          if (event.target instanceof Element && event.target.closest('#gateBtn')) unlockInvitation();
+        }, true);
+
+        const form = document.getElementById('rsvpForm');
+        const status = document.getElementById('rsvpStatus');
+        const fallback = document.getElementById('rsvpFallback');
+        const confirmation = document.getElementById('rsvpConfirmation');
+        const confirmationCopy = document.getElementById('rsvpConfirmationCopy');
+        const confirmationFallback = document.getElementById('rsvpConfirmationFallback');
+        const editButton = document.getElementById('rsvpConfirmationEdit');
+        if (!form || !status || !confirmation || !confirmationCopy || !editButton) return;
+
+        let lastAttendance = 'Katılacağım';
+        let confirmationVisible = false;
+
+        form.addEventListener('submit', () => {
+          const selected = new FormData(form).get('attendance');
+          if (typeof selected === 'string') lastAttendance = selected;
+        }, true);
+
+        const showConfirmation = (state) => {
+          if (confirmationVisible) return;
+          confirmationVisible = true;
+          confirmationCopy.textContent = lastAttendance === 'Katılamayacağım'
+            ? 'Bizi düşündüğünüz ve yanıt verdiğiniz için teşekkür ederiz. ♡'
+            : 'Sizi aramızda görmek için sabırsızlanıyoruz. ♡';
+
+          if (confirmationFallback && fallback) {
+            confirmationFallback.href = fallback.href;
+            confirmationFallback.hidden = state !== 'pending';
+          }
+
+          form.classList.add('is-confirming');
+          window.setTimeout(() => {
+            form.hidden = true;
+            form.classList.remove('is-confirming');
+            confirmation.hidden = false;
+            requestAnimationFrame(() => {
+              confirmation.classList.add('is-visible');
+              confirmation.focus({ preventScroll: true });
+            });
+          }, 280);
+        };
+
+        const syncRsvpState = () => {
+          const state = status.dataset.state;
+          if (state === 'success' || state === 'pending') {
+            // Wait one frame so the original form logic can finish updating its fallback state.
+            requestAnimationFrame(() => showConfirmation(state));
+          }
+        };
+
+        new MutationObserver(syncRsvpState).observe(status, {
+          attributes: true,
+          attributeFilter: ['data-state'],
+          childList: true,
+          subtree: true
+        });
+
+        editButton.addEventListener('click', () => {
+          confirmationVisible = false;
+          confirmation.classList.remove('is-visible');
+          window.setTimeout(() => {
+            confirmation.hidden = true;
+            form.hidden = false;
+            requestAnimationFrame(() => {
+              form.classList.add('is-returning');
+              requestAnimationFrame(() => form.classList.remove('is-returning'));
+              form.querySelector('input, textarea, button')?.focus({ preventScroll: true });
+            });
+          }, 220);
+        });
+      })();
+    </script>
+
+    <script>
+      (() => {
         const viewer = document.getElementById('weddingCoupleViewer');
         if (!viewer) return;
 
+        const stage = viewer.closest('.model-showcase__stage');
         const loader = document.getElementById('modelShowcaseLoader');
         const loaderText = document.getElementById('modelShowcaseLoaderText');
+        const fallback = document.getElementById('modelShowcaseFallback');
         const mobileMq = window.matchMedia('(max-width: 700px)');
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+        let modelLoaded = false;
+        let modelInView = false;
+        let softFallbackTimer = null;
+        let modelViewerLibraryPromise = null;
+        let modelLoadStarted = false;
+
+        const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+        const effectiveType = connection?.effectiveType || '';
+        const saveData = Boolean(connection?.saveData);
+        const slowConnection = saveData || effectiveType === 'slow-2g' || effectiveType === '2g';
+        const moderateConnection = effectiveType === '3g';
+
+        const syncModelRotation = () => {
+          const shouldRotate = modelLoaded && modelInView && !document.hidden && !reducedMotion.matches && !stage?.classList.contains('is-fallback');
+          viewer.toggleAttribute('auto-rotate', shouldRotate);
+        };
+
+        // Model sayfanın sonunda olduğu için, görünene kadar GPU'da sürekli döndürme yapma.
+        viewer.removeAttribute('auto-rotate');
+
+        const rotationObserver = new IntersectionObserver((entries) => {
+          modelInView = Boolean(entries[0]?.isIntersecting);
+          syncModelRotation();
+        }, { threshold: 0.04 });
+        rotationObserver.observe(stage || viewer);
+
+        document.addEventListener('visibilitychange', syncModelRotation);
+        reducedMotion.addEventListener?.('change', syncModelRotation);
 
         const hideLoader = () => {
           if (loader) loader.classList.add('is-hidden');
+        };
+
+        const showFallback = ({ permanent = false } = {}) => {
+          if (modelLoaded || !stage || !fallback) return;
+          if (!fallback.getAttribute('src') && fallback.dataset.src) {
+            fallback.setAttribute('src', fallback.dataset.src);
+          }
+          stage.classList.add('is-fallback');
+          viewer.removeAttribute('auto-rotate');
+          hideLoader();
+          if (permanent) viewer.removeAttribute('src');
+        };
+
+        const hideFallback = () => {
+          stage?.classList.remove('is-fallback');
+          syncModelRotation();
         };
 
         const setLoaderProgress = (progress) => {
           if (!loaderText) return;
           const pct = Math.max(0, Math.min(100, Math.round(progress * 100)));
           loaderText.textContent = pct > 0 ? `3D model hazırlanıyor · %${pct}` : '3D model hazırlanıyor';
-          if (pct >= 100) {
-            window.setTimeout(hideLoader, 220);
-          }
+          if (pct >= 100) window.setTimeout(hideLoader, 220);
         };
 
         const applyResponsiveViewerTuning = () => {
@@ -639,8 +901,7 @@
         mobileMq.addEventListener?.('change', applyResponsiveViewerTuning);
 
         viewer.addEventListener('progress', (event) => {
-          const progress = event.detail?.totalProgress || 0;
-          setLoaderProgress(progress);
+          setLoaderProgress(event.detail?.totalProgress || 0);
         });
 
         const hideNativeProgressBar = () => {
@@ -655,35 +916,124 @@
           } catch (e) {}
         };
 
-        customElements.whenDefined('model-viewer').then(() => {
-          hideNativeProgressBar();
-          requestAnimationFrame(hideNativeProgressBar);
-        });
-
         viewer.addEventListener('load', () => {
+          modelLoaded = true;
+          if (softFallbackTimer) window.clearTimeout(softFallbackTimer);
           hideLoader();
+          hideFallback();
           hideNativeProgressBar();
           applyResponsiveViewerTuning();
           if ('resetTurntableRotation' in viewer) {
             try { viewer.resetTurntableRotation(0); } catch (e) {}
           }
+          syncModelRotation();
         });
 
         viewer.addEventListener('error', () => {
-          if (!loader || !loaderText) return;
-          loader.classList.add('is-error');
-          loaderText.textContent = '3D model yüklenemedi';
+          showFallback({ permanent: true });
+          console.warn('3D model yüklenemedi; statik görsel gösteriliyor.');
         });
 
-        const startModelLoad = () => {
-          if (!viewer.getAttribute('src') && viewer.dataset.src) {
-            viewer.setAttribute('src', viewer.dataset.src);
+        const withTimeout = (promise, ms, label) => new Promise((resolve, reject) => {
+          const timer = window.setTimeout(() => reject(new Error(`${label} zaman aşımı`)), ms);
+          promise.then(
+            (value) => { window.clearTimeout(timer); resolve(value); },
+            (error) => { window.clearTimeout(timer); reject(error); }
+          );
+        });
+
+        const appendModuleScript = (src) => new Promise((resolve, reject) => {
+          const script = document.createElement('script');
+          script.type = 'module';
+          script.src = src;
+          script.crossOrigin = 'anonymous';
+          script.onload = resolve;
+          script.onerror = () => reject(new Error(`Kütüphane yüklenemedi: ${src}`));
+          document.head.appendChild(script);
+        });
+
+        const loadLibraryFrom = async (src) => {
+          await withTimeout(appendModuleScript(src), 7000, '3D kütüphane indirme');
+          await withTimeout(customElements.whenDefined('model-viewer'), 4500, '3D bileşeni başlatma');
+        };
+
+        const loadModelViewerLibrary = () => {
+          if (customElements.get('model-viewer')) return Promise.resolve();
+          if (modelViewerLibraryPromise) return modelViewerLibraryPromise;
+
+          modelViewerLibraryPromise = (async () => {
+            const sources = [
+              'https://ajax.googleapis.com/ajax/libs/model-viewer/4.3.1/model-viewer.min.js',
+              'https://cdn.jsdelivr.net/npm/@google/model-viewer@4.3.1/dist/model-viewer.min.js'
+            ];
+            let lastError;
+            for (const src of sources) {
+              try {
+                await loadLibraryFrom(src);
+                hideNativeProgressBar();
+                requestAnimationFrame(hideNativeProgressBar);
+                return;
+              } catch (error) {
+                lastError = error;
+              }
+            }
+            throw lastError || new Error('3D görüntüleyici başlatılamadı');
+          })();
+          return modelViewerLibraryPromise;
+        };
+
+        const armSoftFallback = () => {
+          if (softFallbackTimer) window.clearTimeout(softFallbackTimer);
+          softFallbackTimer = window.setTimeout(
+            () => showFallback({ permanent: false }),
+            slowConnection ? 18000 : moderateConnection ? 13000 : 9000
+          );
+        };
+
+        const startModelLoad = async () => {
+          if (modelLoadStarted || modelLoaded) return;
+          if (document.hidden) {
+            document.addEventListener('visibilitychange', () => {
+              if (!document.hidden) startModelLoad();
+            }, { once: true });
+            return;
+          }
+
+          modelLoadStarted = true;
+          try {
+            await loadModelViewerLibrary();
+            hideNativeProgressBar();
+            armSoftFallback();
+            if (!viewer.getAttribute('src') && viewer.dataset.src) {
+              viewer.setAttribute('src', viewer.dataset.src);
+            }
+          } catch (error) {
+            modelLoadStarted = false;
+            showFallback({ permanent: true });
+            console.warn('3D görüntüleyici kullanılamıyor; statik görsel gösteriliyor.', error);
           }
         };
 
-        // Modeli kullanıcı 3D bölüme gelmeden erkenden arka planda yükle.
-        // Kısa gecikme, hero video ve ilk görünümün ağ önceliğini korur.
-        const queueEarlyModelLoad = () => window.setTimeout(startModelLoad, 2000);
+        const nearModelObserver = new IntersectionObserver((entries) => {
+          if (entries.some((entry) => entry.isIntersecting)) {
+            startModelLoad();
+            nearModelObserver.disconnect();
+          }
+        }, { rootMargin: slowConnection ? '900px 0px' : '1600px 0px', threshold: 0.01 });
+        nearModelObserver.observe(viewer);
+
+        const queueEarlyModelLoad = () => {
+          if (slowConnection) return;
+          const delay = moderateConnection ? 5000 : 2000;
+          window.setTimeout(() => {
+            if ('requestIdleCallback' in window) {
+              window.requestIdleCallback(() => startModelLoad(), { timeout: 1800 });
+            } else {
+              startModelLoad();
+            }
+          }, delay);
+        };
+
         if (document.readyState === 'loading') {
           document.addEventListener('DOMContentLoaded', queueEarlyModelLoad, { once: true });
         } else {
