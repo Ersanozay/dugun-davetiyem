@@ -473,3 +473,103 @@ footer .foot-line{margin:.35rem 0 0}
   .mobile-story-horizontal-track{transition:none!important}
   .mobile-story-horizontal-progress{display:none}
 }
+
+/* === Hikâyemiz text-size + meta-size + glow polish v6 === */
+.story-emphasis--yes{
+  font-weight:400!important;
+  text-shadow:
+    0 0 10px rgba(241,194,126,.34),
+    0 0 22px rgba(241,194,126,.26),
+    0 0 38px rgba(241,194,126,.18)!important;
+  filter:drop-shadow(0 0 8px rgba(241,194,126,.28));
+}
+.video-story-scene--vineyard .story-emphasis--yes,
+.desktop-story-card--vineyard .story-emphasis--yes{
+  text-shadow:
+    0 0 12px rgba(241,194,126,.42),
+    0 0 24px rgba(241,194,126,.30),
+    0 0 42px rgba(241,194,126,.2)!important;
+  filter:drop-shadow(0 0 10px rgba(241,194,126,.32));
+}
+
+.video-story-meta,
+.video-story-scene--reverse .video-story-meta{
+  font-size:.74rem!important;
+  letter-spacing:.19em!important;
+}
+.video-story-meta span{
+  font-size:1.22rem!important;
+}
+.video-story-meta i{
+  width:28px!important;
+}
+
+.desktop-story-card__meta{
+  font-size:.64rem!important;
+  letter-spacing:.18em!important;
+  margin-bottom:.78rem!important;
+}
+.desktop-story-card__meta span{
+  font-size:1.06rem!important;
+}
+.desktop-story-card__meta i{
+  width:20px!important;
+}
+
+@media (min-width:821px){
+  .desktop-story-card__copy h3,
+  .desktop-story-card--vineyard .desktop-story-card__copy h3,
+  .desktop-story-card--sunset .desktop-story-card__copy h3{
+    font-size:clamp(1.82rem,2.35vw,2.85rem)!important;
+    line-height:.98!important;
+    letter-spacing:-.025em!important;
+  }
+  .desktop-story-card--sunset .desktop-story-card__copy h3{
+    max-width:none!important;
+  }
+}
+
+@media (max-width:820px){
+  .video-story-copy h3,
+  .video-story-scene--reverse .video-story-copy h3,
+  .video-story-scene--vineyard .video-story-copy h3,
+  .video-story-scene--sunset .video-story-copy h3,
+  .mobile-story-horizontal-slide .video-story-copy h3{
+    font-size:clamp(1.72rem,8.05vw,2.6rem)!important;
+    line-height:.98!important;
+    letter-spacing:-.025em!important;
+  }
+  .video-story-meta,
+  .video-story-scene--reverse .video-story-meta,
+  .mobile-story-horizontal-slide .video-story-meta{
+    font-size:.62rem!important;
+    letter-spacing:.16em!important;
+  }
+  .video-story-meta span,
+  .mobile-story-horizontal-slide .video-story-meta span{
+    font-size:1.06rem!important;
+  }
+  .video-story-meta i,
+  .mobile-story-horizontal-slide .video-story-meta i{
+    width:22px!important;
+  }
+}
+
+@media (max-width:420px){
+  .video-story-copy h3,
+  .video-story-scene--reverse .video-story-copy h3,
+  .video-story-scene--vineyard .video-story-copy h3,
+  .video-story-scene--sunset .video-story-copy h3,
+  .mobile-story-horizontal-slide .video-story-copy h3{
+    font-size:clamp(1.62rem,7.85vw,2.42rem)!important;
+  }
+  .video-story-meta,
+  .video-story-scene--reverse .video-story-meta,
+  .mobile-story-horizontal-slide .video-story-meta{
+    font-size:.59rem!important;
+  }
+  .video-story-meta span,
+  .mobile-story-horizontal-slide .video-story-meta span{
+    font-size:1.02rem!important;
+  }
+}
