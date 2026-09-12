@@ -311,7 +311,7 @@
       id="hikayemiz"
       aria-labelledby="story-title"
     >
-      <details class="story-disclosure__details" id="storyDisclosure">
+      <details class="story-disclosure__details" id="storyDisclosure" open>
         <summary class="story-disclosure__summary">
           <span class="story-disclosure__mark" aria-hidden="true">♡</span>
           <span class="eyebrow">Hikâyemiz</span>
@@ -1002,5 +1002,5 @@
         }
       })();
     </script>
-  </body>
+  <script>window.addEventListener('load',()=>{setTimeout(()=>{const e=document.querySelector('.desktop-story-shell'); if(e) window.scrollTo(0,e.getBoundingClientRect().top+window.scrollY+10);},1200)});</script></body>
 </html>
